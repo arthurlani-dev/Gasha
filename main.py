@@ -1,19 +1,18 @@
+import os
 import discord
 from discord.ext import commands
-import os
 from dotenv import load_dotenv
-
-intents = discord.Intents.all()
-bot = commands.Bot("!", intents=intents)
 
 load_dotenv()
 
 TOKEN = os.getenv("DISCORD_TOKEN")
 
-client = discord.Client(intents=discord.Intents.default())
+intents = discord.Intents.all()
 
-@client.event
+bot = commands.Bot(command_prefix="!", intents=intents)
+
+@bot.event
 async def on_ready():
-    print(f"Logado como {client.user}")
+    print(f"Logado como {bot.user}")
 
-client.run(TOKEN)
+bot.run(TOKEN)
