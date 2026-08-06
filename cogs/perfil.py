@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-from database.database import criar_usuario, pegar_usuario
+from database.database import criar_usuario, pegar_perfil
 
 
 class Perfil(commands.Cog):
@@ -17,7 +17,7 @@ class Perfil(commands.Cog):
         criar_usuario(usuario.id)
 
         # Busca os dados
-        dados = pegar_usuario(usuario.id)
+dados = pegar_perfil(usuario.id)
 
         if dados is None:
             await ctx.send("❌ Não foi possível encontrar seu perfil.")

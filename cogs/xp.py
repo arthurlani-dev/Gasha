@@ -1,14 +1,13 @@
 import random
 import time
 
-import discord
 from discord.ext import commands
 
 from database.database import (
     criar_usuario,
-    pegar_usuario,
+    pegar_perfil,
     adicionar_xp,
-    atualizar_level
+    subir_level
 )
 
 
@@ -22,66 +21,55 @@ class XP(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
 
-        # Ignora mensagens do próprio bot
         if message.author.bot:
             return
 
 
-        usuario = message.author
-
-        criar_usuario(usuario.id)
+        user_id = message.author.id
 
 
-        # Cooldown de XP (60 segundos)
+        criar_usuario(user_id)
+
+
         agora = time.time()
 
-        ultimo_xp = self.cooldown.get(usuario.id, 0)
+        ultimo = self.cooldown.get(user_id, 0)
 
 
-        if agora - ultimo_xp < 60:
+        if agora - ultimo < 60:
             return
 
 
-        self.cooldown[usuario.id] = agora
+        self.cooldown[user_id] = agora
 
 
-        # XP aleatório
-        xp_ganho = random.randint(15, 30)
+        xp_ganho = random.randint(10, 25)
 
 
         adicionar_xp(
-            usuario.id,
+            user_id,
             xp_ganho
         )
 
 
-        dados = pegar_usuario(usuario.id)
-
-        level, xp, pixels, conquistas = dados
+        perfil = pegar_perfil(user_id)
 
 
-        # Sistema de level
+        _, level, xp, pixels, conquistas = perfil
+
+
         xp_necessario = level * 1000
 
 
         if xp >= xp_necessario:
 
-            novo_level = level + 1
-
-            pixels_ganho = 100
-
-
-            atualizar_level(
-                usuario.id,
-                novo_level,
-                pixels_ganho
-            )
+            subir_level(user_id)
 
 
             await message.channel.send(
-                f"🎉 {usuario.mention} subiu para o **Level {novo_level}**!\n"
-                f"💎 Você ganhou **{pixels_ganho} Pixels**!"
+                f"🎉 {message.author.mention} subiu para o nível **{level + 1}**!"
             )
+
 
 
 async def setup(bot):

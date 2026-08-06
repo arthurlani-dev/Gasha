@@ -1,5 +1,6 @@
 import sqlite3
 
+
 DATABASE = "database/bot.db"
 
 
@@ -25,45 +26,81 @@ def criar_tabelas():
     conn.close()
 
 
+
 def criar_usuario(user_id):
-    conn = conectar()
-    cursor = conn.cursor()
 
-    cursor.execute(
-        "SELECT id FROM usuarios WHERE id = ?",
-        (user_id,)
-    )
-
-    usuario = cursor.fetchone()
-
-    if usuario is None:
-        cursor.execute(
-            """
-            INSERT INTO usuarios (id)
-            VALUES (?)
-            """,
-            (user_id,)
-        )
-
-    conn.commit()
-    conn.close()
-
-
-def pegar_usuario(user_id):
     conn = conectar()
     cursor = conn.cursor()
 
     cursor.execute(
         """
-        SELECT level, xp, pixels, conquistas
+        INSERT OR IGNORE INTO usuarios (id)
+        VALUES (?)
+        """,
+        (user_id,)
+    )
+
+    conn.commit()
+    conn.close()
+
+
+
+def pegar_perfil(user_id):
+
+    conn = conectar()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        SELECT id, level, xp, pixels, conquistas
         FROM usuarios
         WHERE id = ?
         """,
         (user_id,)
     )
 
-    dados = cursor.fetchone()
+    resultado = cursor.fetchone()
 
     conn.close()
 
-    return dados
+    return resultado
+
+
+
+def adicionar_xp(user_id, quantidade):
+
+    conn = conectar()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        UPDATE usuarios
+        SET xp = xp + ?
+        WHERE id = ?
+        """,
+        (quantidade, user_id)
+    )
+
+    conn.commit()
+    conn.close()
+
+
+
+def subir_level(user_id):
+
+    conn = conectar()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        UPDATE usuarios
+        SET level = level + 1,
+            pixels = pixels + 100,
+            xp = 0
+        WHERE id = ?
+        """,
+        (user_id,)
+    )
+
+    conn.commit()
+    conn.close()
