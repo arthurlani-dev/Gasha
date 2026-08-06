@@ -1,6 +1,5 @@
 import sqlite3
 
-
 DATABASE = "database/bot.db"
 
 
@@ -13,13 +12,13 @@ def criar_tabelas():
     cursor = conn.cursor()
 
     cursor.execute("""
-    CREATE TABLE IF NOT EXISTS usuarios (
-        id INTEGER PRIMARY KEY,
-        level INTEGER DEFAULT 1,
-        xp INTEGER DEFAULT 0,
-        pixels INTEGER DEFAULT 0,
-        conquistas TEXT DEFAULT ''
-    )
+        CREATE TABLE IF NOT EXISTS usuarios (
+            id INTEGER PRIMARY KEY,
+            level INTEGER DEFAULT 1,
+            xp INTEGER DEFAULT 0,
+            pixels INTEGER DEFAULT 0,
+            conquistas TEXT DEFAULT ''
+        )
     """)
 
     conn.commit()
@@ -35,9 +34,9 @@ def criar_usuario(user_id):
         (user_id,)
     )
 
-    existe = cursor.fetchone()
+    usuario = cursor.fetchone()
 
-    if not existe:
+    if usuario is None:
         cursor.execute(
             """
             INSERT INTO usuarios (id)

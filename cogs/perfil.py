@@ -13,7 +13,7 @@ class Perfil(commands.Cog):
         self.bot = bot
 
 
-    @commands.command()
+    @commands.command(name="perfil")
     async def perfil(self, ctx):
 
         usuario = ctx.author
@@ -26,36 +26,34 @@ class Perfil(commands.Cog):
 
 
         if conquistas:
-            lista_conquistas = conquistas.replace(
-                ",",
-                "\n"
-            )
+            lista_conquistas = conquistas.replace(",", "\n")
         else:
             lista_conquistas = "Nenhuma conquista ainda 😢"
 
 
         # Barra de XP
-        tamanho = 10
+        tamanho_barra = 10
 
         progresso = int(
-            (xp % 1000) / 1000 * tamanho
+            ((xp % 1000) / 1000) * tamanho_barra
         )
 
-        barra = (
+        barra_xp = (
             "🟦" * progresso +
-            "⬜" * (tamanho - progresso)
+            "⬜" * (tamanho_barra - progresso)
         )
 
 
         embed = discord.Embed(
-            title=f"Perfil de {usuario.display_name}",
+            title=f"👤 Perfil de {usuario.display_name}",
             color=discord.Color.blurple()
         )
 
 
-        embed.set_thumbnail(
-            url=usuario.avatar.url
-        )
+        if usuario.avatar:
+            embed.set_thumbnail(
+                url=usuario.avatar.url
+            )
 
 
         embed.set_image(
@@ -69,20 +67,17 @@ class Perfil(commands.Cog):
             inline=True
         )
 
-
         embed.add_field(
             name="✨ XP",
-            value=f"`{xp}`\n{barra}",
+            value=f"`{xp}`\n{barra_xp}",
             inline=True
         )
-
 
         embed.add_field(
             name="💎 Pixels",
             value=f"`{pixels}`",
             inline=True
         )
-
 
         embed.add_field(
             name="🏆 Conquistas",
@@ -92,7 +87,7 @@ class Perfil(commands.Cog):
 
 
         embed.set_footer(
-            text=f"Solicitado por {ctx.author.display_name}"
+            text=f"{self.bot.user.name} • Sistema de Perfil"
         )
 
 
