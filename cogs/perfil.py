@@ -97,3 +97,4 @@ class Perfil(commands.Cog):
 
 async def setup(bot):
     await bot.add_cog(Perfil(bot))
+    print("Cog Perfil carregado!")
