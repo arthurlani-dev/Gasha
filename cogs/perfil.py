@@ -17,13 +17,13 @@ class Perfil(commands.Cog):
         criar_usuario(usuario.id)
 
         # Busca os dados
-dados = pegar_perfil(usuario.id)
+        dados = pegar_perfil(usuario.id)
 
         if dados is None:
             await ctx.send("❌ Não foi possível encontrar seu perfil.")
             return
 
-        level, xp, pixels, conquistas = dados
+        _, level, xp, pixels, conquistas = dados
 
 
         # Formatação das conquistas
