@@ -1,0 +1,202 @@
+/* ==========================================================================
+   DAILY — Recompensa Diária
+   ========================================================================== */
+.daily-hero{
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding-top: 120px; padding-bottom: 80px;
+  position: relative;
+  overflow: hidden;
+}
+.daily-glow{
+  position: absolute; z-index: 0; pointer-events: none;
+  width: 700px; height: 700px; left: 50%; top: 10%;
+  transform: translate(-50%,-50%);
+  background: radial-gradient(circle, rgba(124,77,255,.32), transparent 65%);
+}
+.daily-glow.gold{
+  width: 520px; height: 520px; left: 78%; top: 70%;
+  background: radial-gradient(circle, rgba(245,185,66,.22), transparent 65%);
+}
+
+.daily-wrap{ position: relative; z-index: 1; max-width: 620px; margin-inline: auto; padding-inline: 24px; width: 100%; }
+
+.daily-crumb{
+  display: flex; align-items: center; gap: 8px;
+  color: var(--mist-2); font-size: 13.5px; margin-bottom: 26px; justify-content: center;
+}
+.daily-crumb a{ color: var(--mist); font-weight: 700; }
+.daily-crumb a:hover{ color: var(--paper); }
+
+.daily-card{
+  border-radius: var(--radius-l);
+  background: linear-gradient(165deg, var(--void-panel), var(--void-soft));
+  border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow-panel);
+  padding: clamp(28px, 5vw, 48px);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.daily-card::before{
+  content: ""; position: absolute; inset: 0;
+  background-image: var(--rune-grid); opacity: .35; pointer-events: none;
+}
+.daily-card > *{ position: relative; z-index: 1; }
+
+.daily-badge{ display: inline-flex; margin-inline: auto; }
+
+.daily-card h1{ margin-top: 16px; font-size: clamp(1.7rem, 4vw, 2.3rem); }
+.daily-card .lede{ color: var(--mist); margin-top: 10px; font-size: 14.5px; max-width: 42ch; margin-inline: auto; }
+
+/* ---------- Logged-out state ---------- */
+.daily-login{ margin-top: 34px; }
+.discord-btn{
+  display: inline-flex; align-items: center; gap: 12px;
+  height: 56px; padding: 0 28px; border-radius: var(--radius-pill);
+  background: #5865f2; color: #fff; font-weight: 700; font-size: 15.5px;
+  box-shadow: 0 0 0 1px rgba(88,101,242,.5), 0 20px 50px -14px rgba(88,101,242,.7);
+  transition: transform .35s var(--ease-spring), filter .3s;
+}
+.discord-btn:hover{ transform: translateY(-3px); filter: brightness(1.08); }
+.discord-btn svg{ width: 22px; height: 22px; }
+.daily-login-note{ margin-top: 16px; font-size: 12.5px; color: var(--mist-2); }
+.daily-login-note code{ font-family: var(--f-mono); background: rgba(255,255,255,0.06); padding: 2px 7px; border-radius: 6px; }
+
+/* ---------- Logged-in state ---------- */
+.daily-app{ display: none; margin-top: 6px; }
+.daily-app.is-active{ display: block; }
+.daily-login.is-hidden{ display: none; }
+
+.daily-user{
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px; border-radius: var(--radius-pill);
+  background: rgba(255,255,255,0.04); border: 1px solid var(--line-strong);
+  width: fit-content; margin-inline: auto; margin-top: 28px;
+}
+.daily-user img{ width: 34px; height: 34px; border-radius: 50%; }
+.daily-user b{ font-size: 14px; }
+.daily-user span{ display: block; font-size: 11.5px; color: var(--mist-2); }
+.daily-logout{ margin-left: 6px; color: var(--mist-2); font-size: 12px; text-decoration: underline; text-underline-offset: 3px; }
+.daily-logout:hover{ color: var(--paper); }
+
+.balance-row{
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  margin-top: 30px;
+}
+.balance-row .ico{ width: 26px; height: 26px; }
+.balance-num{
+  font-family: var(--f-mono); font-weight: 700;
+  font-size: clamp(2.2rem, 6vw, 3.1rem);
+  background: var(--grad-gold); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.balance-label{ color: var(--mist-2); font-size: 12.5px; text-transform: uppercase; letter-spacing: .1em; font-family: var(--f-mono); margin-top: 2px; }
+
+/* Capsule claim button */
+.claim-zone{ margin-top: 40px; position: relative; height: 190px; display: flex; align-items: center; justify-content: center; }
+.claim-btn{
+  position: relative; z-index: 2;
+  width: 168px; height: 168px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--void-soft);
+  box-shadow: var(--glow-arcane);
+  transition: transform .3s var(--ease-spring);
+}
+.claim-btn:hover:not(:disabled){ transform: scale(1.045); }
+.claim-btn:active:not(:disabled){ transform: scale(0.96); }
+.claim-btn:disabled{ cursor: default; }
+
+.claim-btn-inner{
+  width: 92%; height: 92%; border-radius: 50%;
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+}
+.claim-btn-inner::before{ content:""; position:absolute; inset:0; background: var(--grad-gold); clip-path: polygon(0 0,100% 0,100% 48%,0 48%); }
+.claim-btn-inner::after{ content:""; position:absolute; inset:0; background: var(--grad-arcane); clip-path: polygon(0 52%,100% 52%,100% 100%,0 100%); }
+.claim-btn-inner .seam{ position:absolute; left:6%; right:6%; top:50%; height:4px; margin-top:-2px; background: rgba(10,6,20,.55); border-radius: 4px; z-index:2; }
+.claim-btn-label{ position: relative; z-index: 3; color: #fff; font-family: var(--f-display); font-weight: 700; font-size: 15px; text-shadow: 0 2px 10px rgba(0,0,0,.4); }
+.claim-btn-sub{ position: relative; z-index: 3; color: rgba(255,255,255,.85); font-family: var(--f-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; }
+
+.claim-ring{
+  position: absolute; z-index: 1; width: 168px; height: 168px; border-radius: 50%;
+  border: 2px dashed rgba(124,77,255,.4);
+  animation: ring-spin 18s linear infinite;
+}
+@keyframes ring-spin{ to{ transform: rotate(360deg); } }
+
+.claim-btn.is-cooldown .claim-btn-inner{ filter: grayscale(0.55) brightness(0.7); }
+.claim-btn.is-cooldown{ box-shadow: none; }
+.claim-btn.is-cooldown .claim-ring{ border-color: var(--line-strong); animation: none; }
+
+.claim-pulse{
+  position: absolute; z-index: 0; width: 168px; height: 168px; border-radius: 50%;
+  background: rgba(124,77,255,.5);
+  animation: claim-pulse 2.4s ease-out infinite;
+}
+@keyframes claim-pulse{ 0%{ transform: scale(0.85); opacity: .55; } 100%{ transform: scale(1.55); opacity: 0; } }
+.claim-btn.is-cooldown ~ .claim-pulse{ display: none; }
+
+.cooldown-wrap{ margin-top: 22px; }
+.cooldown-label{ font-size: 12.5px; color: var(--mist-2); margin-bottom: 8px; }
+.cooldown-timer{
+  font-family: var(--f-mono); font-size: 1.5rem; font-weight: 700; letter-spacing: .04em;
+  color: var(--paper);
+  display: inline-flex; gap: 6px;
+}
+.cooldown-timer .u{ font-size: .55em; color: var(--mist-2); margin-left: 2px; align-self: flex-end; margin-bottom: 3px; }
+
+/* Reward toast / gain animation */
+.gain-pop{
+  position: absolute; z-index: 4; top: -6px; left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--f-mono); font-weight: 700; font-size: 1.3rem;
+  color: var(--gold-2);
+  opacity: 0; pointer-events: none;
+  text-shadow: 0 0 18px rgba(245,185,66,.8);
+}
+.gain-pop.is-animating{ animation: gain-float 1.5s var(--ease-out) forwards; }
+@keyframes gain-float{
+  0%{ opacity: 0; transform: translate(-50%, 10px) scale(.8); }
+  20%{ opacity: 1; transform: translate(-50%, -10px) scale(1.08); }
+  80%{ opacity: 1; transform: translate(-50%, -46px) scale(1); }
+  100%{ opacity: 0; transform: translate(-50%, -62px) scale(1); }
+}
+
+/* Streak */
+.streak-row{ display: flex; justify-content: center; gap: 9px; margin-top: 40px; flex-wrap: wrap; }
+.streak-day{
+  width: 40px; height: 48px; border-radius: 12px;
+  border: 1px solid var(--line-strong); background: rgba(255,255,255,0.03);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  font-family: var(--f-mono); font-size: 10px; color: var(--mist-2);
+}
+.streak-day span{ font-size: 13px; }
+.streak-day.is-done{ background: rgba(245,185,66,0.12); border-color: rgba(245,185,66,.4); color: var(--gold-2); }
+.streak-day.is-today{ border-color: var(--arcane-2); box-shadow: 0 0 0 3px rgba(124,77,255,.18); color: var(--paper); }
+.streak-caption{ margin-top: 14px; font-size: 12.5px; color: var(--mist-2); }
+
+.daily-foot-links{ margin-top: 40px; display: flex; justify-content: center; gap: 22px; font-size: 13px; }
+.daily-foot-links a{ color: var(--mist-2); }
+.daily-foot-links a:hover{ color: var(--paper); }
+
+/* Dev/integration note */
+.integration-note{
+  margin-top: 46px;
+  border-radius: var(--radius-m);
+  border: 1px dashed var(--line-strong);
+  background: rgba(255,255,255,0.02);
+  padding: 18px 20px;
+  text-align: left;
+  font-size: 12.5px;
+  color: var(--mist-2);
+}
+.integration-note b{ color: var(--mist); display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 12.5px; }
+.integration-note code{ font-family: var(--f-mono); color: var(--gold-2); }
+.integration-note ul{ margin-top: 8px; padding-left: 18px; list-style: disc; display: flex; flex-direction: column; gap: 4px; }
+
+@media (max-width: 520px){
+  .claim-btn, .claim-ring, .claim-pulse{ width: 140px; height: 140px; }
+  .streak-row{ gap: 6px; }
+  .streak-day{ width: 31px; height: 40px; font-size: 9px; }
+  .streak-day span{ font-size: 11px; }
+}

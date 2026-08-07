@@ -6,7 +6,7 @@ DATABASE = "database/bot.db"
 
 def conectar():
     conn = sqlite3.connect(DATABASE)
-    # WAL permite bot e site acessarem o banco ao mesmo tempo sem travar
+    # WAL permite bot e site (FastAPI) acessarem o banco ao mesmo tempo sem travar
     conn.execute("PRAGMA journal_mode=WAL")
     return conn
 
@@ -22,9 +22,24 @@ def criar_tabelas():
             xp INTEGER DEFAULT 0,
             pixels INTEGER DEFAULT 0,
             conquistas TEXT DEFAULT '',
-            ultimo_clique_site INTEGER DEFAULT 0
+            ultimo_clique_site INTEGER DEFAULT 0,
+            streak_atual INTEGER DEFAULT 0
         )
     """)
+
+    # Contadores globais do site (servidores, comandos executados, etc.)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS estatisticas (
+            chave TEXT PRIMARY KEY,
+            valor INTEGER DEFAULT 0
+        )
+    """)
+
+    for chave in ("servidores", "comandos_executados"):
+        cursor.execute(
+            "INSERT OR IGNORE INTO estatisticas (chave, valor) VALUES (?, 0)",
+            (chave,)
+        )
 
     conn.commit()
     conn.close()
@@ -43,6 +58,11 @@ def _migrar_colunas():
     if "ultimo_clique_site" not in colunas:
         cursor.execute(
             "ALTER TABLE usuarios ADD COLUMN ultimo_clique_site INTEGER DEFAULT 0"
+        )
+
+    if "streak_atual" not in colunas:
+        cursor.execute(
+            "ALTER TABLE usuarios ADD COLUMN streak_atual INTEGER DEFAULT 0"
         )
 
     conn.commit()
@@ -126,29 +146,96 @@ def adicionar_pixels(user_id, quantidade):
     conn.close()
 
 
-def pegar_ultimo_clique_site(user_id):
+# ---------------------------------------------------------------------------
+# Recompensa diária (/daily)
+# ---------------------------------------------------------------------------
+
+def pegar_estado_daily(user_id):
+    """Retorna (pixels, ultimo_clique_site, streak_atual) ou None se o usuário não existir."""
     conn = conectar()
     cursor = conn.cursor()
 
     cursor.execute(
-        "SELECT ultimo_clique_site FROM usuarios WHERE id = ?",
+        "SELECT pixels, ultimo_clique_site, streak_atual FROM usuarios WHERE id = ?",
         (user_id,)
     )
 
     resultado = cursor.fetchone()
     conn.close()
+    return resultado
 
-    return resultado[0] if resultado else 0
 
-
-def registrar_clique_site(user_id, timestamp):
+def registrar_claim_diario(user_id, agora, pixels_ganhos, novo_streak):
+    """Soma os pixels ganhos e grava o novo horário/streak do claim diário."""
     conn = conectar()
     cursor = conn.cursor()
 
     cursor.execute(
-        "UPDATE usuarios SET ultimo_clique_site = ? WHERE id = ?",
-        (timestamp, user_id)
+        """
+        UPDATE usuarios
+        SET pixels = pixels + ?,
+            ultimo_clique_site = ?,
+            streak_atual = ?
+        WHERE id = ?
+        """,
+        (pixels_ganhos, agora, novo_streak, user_id)
     )
 
     conn.commit()
     conn.close()
+
+
+# ---------------------------------------------------------------------------
+# Estatísticas do site (seção "Em números")
+# ---------------------------------------------------------------------------
+
+def definir_estatistica(chave, valor):
+    """Sobrescreve o valor de uma estatística (ex: contagem de servidores)."""
+    conn = conectar()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        INSERT INTO estatisticas (chave, valor) VALUES (?, ?)
+        ON CONFLICT(chave) DO UPDATE SET valor = excluded.valor
+        """,
+        (chave, valor)
+    )
+
+    conn.commit()
+    conn.close()
+
+
+def incrementar_estatistica(chave, quantidade=1):
+    """Soma ao valor atual de uma estatística (ex: +1 comando executado)."""
+    conn = conectar()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "UPDATE estatisticas SET valor = valor + ? WHERE chave = ?",
+        (quantidade, chave)
+    )
+
+    conn.commit()
+    conn.close()
+
+
+def pegar_estatisticas():
+    """Números reais exibidos na seção 'Em números' do site."""
+    conn = conectar()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT chave, valor FROM estatisticas")
+    dados = dict(cursor.fetchall())
+
+    cursor.execute("SELECT COUNT(*), COALESCE(SUM(pixels), 0) FROM usuarios")
+    total_usuarios, total_pixels = cursor.fetchone()
+
+    conn.close()
+
+    return {
+        "servidores": dados.get("servidores", 0),
+        "usuarios": total_usuarios,
+        "comandos_executados": dados.get("comandos_executados", 0),
+        "pixels_distribuidos": total_pixels,
+    }
