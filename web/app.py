@@ -79,9 +79,11 @@ PIXELS_MAX = int(os.getenv("PIXELS_MAX", 60))
 
 # Permissões pedidas ao servidor quando alguém clica em "Add to Discord".
 # Padrão: ver canais, enviar mensagens, embeds, anexos, histórico, reações,
-# emojis externos e gerenciar cargos (necessário para os cargos automáticos
-# de nível). Ajuste em .env (BOT_PERMISSIONS) se seu bot precisar de mais/menos.
-BOT_PERMISSIONS = os.getenv("BOT_PERMISSIONS", "268815424").strip()
+# emojis externos, gerenciar cargos (cargos automáticos de nível) e
+# gerenciar mensagens (necessário pro !secret/!answer/!confess apagarem
+# a mensagem original e manterem o anonimato). Ajuste em .env
+# (BOT_PERMISSIONS) se seu bot precisar de mais/menos.
+BOT_PERMISSIONS = os.getenv("BOT_PERMISSIONS", "268823616").strip()
 
 DISCORD_API = "https://discord.com/api"
 

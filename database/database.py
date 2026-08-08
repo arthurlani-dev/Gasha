@@ -60,6 +60,31 @@ def criar_tabelas():
             (chave,)
         )
 
+    # !secret — pergunta anônima que junta respostas e revela depois
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS secrets (
+            id SERIAL PRIMARY KEY,
+            guild_id BIGINT,
+            channel_id BIGINT NOT NULL,
+            autor_id BIGINT NOT NULL,
+            pergunta TEXT NOT NULL,
+            criado_em BIGINT NOT NULL,
+            publica_em BIGINT NOT NULL,
+            publicado BOOLEAN DEFAULT FALSE
+        )
+    """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS secret_respostas (
+            id SERIAL PRIMARY KEY,
+            secret_id INTEGER NOT NULL REFERENCES secrets(id) ON DELETE CASCADE,
+            autor_id BIGINT NOT NULL,
+            resposta TEXT NOT NULL,
+            criado_em BIGINT NOT NULL,
+            UNIQUE (secret_id, autor_id)
+        )
+    """)
+
     conn.commit()
     cursor.close()
     conn.close()
@@ -252,6 +277,116 @@ def obter_leaderboard_pixels(limite=10):
     cursor.close()
     conn.close()
     return resultado
+
+
+# ---------------------------------------------------------------------------
+# !secret — pergunta anônima com respostas reveladas depois de um tempo
+# ---------------------------------------------------------------------------
+
+def criar_secret(guild_id, channel_id, autor_id, pergunta, criado_em, publica_em):
+    """Cria um secret e retorna o id gerado."""
+    conn = conectar()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        INSERT INTO secrets (guild_id, channel_id, autor_id, pergunta, criado_em, publica_em)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        RETURNING id
+        """,
+        (guild_id, channel_id, autor_id, pergunta, criado_em, publica_em)
+    )
+
+    secret_id = cursor.fetchone()[0]
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return secret_id
+
+
+def pegar_secret(secret_id):
+    """Retorna (id, channel_id, pergunta, publica_em, publicado) ou None."""
+    conn = conectar()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT id, channel_id, pergunta, publica_em, publicado FROM secrets WHERE id = %s",
+        (secret_id,)
+    )
+
+    resultado = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return resultado
+
+
+def adicionar_resposta_secret(secret_id, autor_id, resposta, criado_em):
+    """Registra a resposta anônima. Retorna False se o usuário já tinha respondido."""
+    conn = conectar()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        INSERT INTO secret_respostas (secret_id, autor_id, resposta, criado_em)
+        VALUES (%s, %s, %s, %s)
+        ON CONFLICT (secret_id, autor_id) DO NOTHING
+        """,
+        (secret_id, autor_id, resposta, criado_em)
+    )
+
+    registrado = cursor.rowcount > 0
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return registrado
+
+
+def pegar_respostas_secret(secret_id):
+    """Lista só o texto das respostas (nunca o autor) — é isso que garante o anonimato."""
+    conn = conectar()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT resposta FROM secret_respostas WHERE secret_id = %s ORDER BY criado_em ASC",
+        (secret_id,)
+    )
+
+    resultado = [linha[0] for linha in cursor.fetchall()]
+    cursor.close()
+    conn.close()
+    return resultado
+
+
+def pegar_secrets_pendentes(agora):
+    """Secrets cujo horário de revelação já chegou e ainda não foram publicados."""
+    conn = conectar()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT id, channel_id, pergunta FROM secrets WHERE publicado = FALSE AND publica_em <= %s",
+        (agora,)
+    )
+
+    resultado = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return resultado
+
+
+def marcar_secret_publicado(secret_id):
+    conn = conectar()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "UPDATE secrets SET publicado = TRUE WHERE id = %s",
+        (secret_id,)
+    )
+
+    conn.commit()
+    cursor.close()
+    conn.close()
 
 
 # ---------------------------------------------------------------------------

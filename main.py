@@ -20,7 +20,8 @@ intents = discord.Intents.all()
 
 bot = commands.Bot(
     command_prefix="!",
-    intents=intents
+    intents=intents,
+    help_command=None  # Substituído pelo comando customizado !commands
 )
 
 
@@ -32,6 +33,8 @@ async def setup_hook():
     await bot.load_extension("cogs.status")
     await bot.load_extension("cogs.xp")
     await bot.load_extension("cogs.economia")
+    await bot.load_extension("cogs.anonimo")
+    await bot.load_extension("cogs.ajuda")
 
 
 @bot.event

@@ -1,6 +1,7 @@
 import random
 import time
 
+import discord
 from discord.ext import commands
 
 from database.database import (
@@ -72,9 +73,19 @@ class XP(commands.Cog):
             subir_level(user_id)
 
 
-            await message.channel.send(
-                f"🎉 {message.author.mention} subiu para o nível **{level + 1}**!"
+            embed = discord.Embed(
+                description=(
+                    f"🎉 Parabéns, {message.author.mention}! Você subiu para o "
+                    f"**nível {level + 1}** neste servidor!"
+                ),
+                color=discord.Color.gold()
             )
+
+            embed.set_footer(
+                text="📍 Níveis são locais de cada servidor — mas seus 💎 pixels valem em todo o Gasha!"
+            )
+
+            await message.channel.send(embed=embed)
 
 
 
