@@ -9,4 +9,4 @@ BOT_PID=$!
 trap "kill $BOT_PID 2>/dev/null" EXIT
 
 # Roda o site, escutando na porta que a plataforma definir (Railway injeta $PORT)
-exec uvicorn web.app:app --host 0.0.0.0 --port "${PORT:-8000}"
+exec python -m uvicorn web.app:app --host 0.0.0.0 --port "${PORT:-8000}"
