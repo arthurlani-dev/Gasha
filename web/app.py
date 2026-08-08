@@ -64,9 +64,13 @@ if _faltando:
     )
 if REDIRECT_URI and not REDIRECT_URI.startswith(("http://", "https://")):
     print(
-        f"[gasha] AVISO: DISCORD_REDIRECT_URI não parece uma URL válida: {REDIRECT_URI!r}. "
-        "Confira se não há espaços, aspas ou quebras de linha coladas junto no valor."
+        f"[gasha] AVISO: DISCORD_REDIRECT_URI está sem o esquema (http/https): {REDIRECT_URI!r}. "
+        "Corrija a variável no Railway para começar com 'https://'. "
+        "Por segurança o app vai completar com https:// automaticamente por enquanto, "
+        "mas isso só funciona se o valor cadastrado no Discord Developer Portal também "
+        "tiver https:// na frente."
     )
+    REDIRECT_URI = f"https://{REDIRECT_URI}"
 
 COOLDOWN_SEGUNDOS = int(os.getenv("COOLDOWN_SEGUNDOS", 24 * 60 * 60))   # 24h
 JANELA_STREAK_SEGUNDOS = int(os.getenv("JANELA_STREAK_SEGUNDOS", 48 * 60 * 60))  # 48h
