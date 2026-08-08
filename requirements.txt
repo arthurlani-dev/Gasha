@@ -3,3 +3,6 @@ python-dotenv
 fastapi
 httpx
 uvicorn
+jinja2
+itsdangerous
+psycopg2-binary
