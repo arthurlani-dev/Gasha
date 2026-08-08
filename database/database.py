@@ -1,71 +1,61 @@
-import sqlite3
+import os
+
+import psycopg2
+from dotenv import load_dotenv
 
 
-DATABASE = "database/bot.db"
+load_dotenv()
+
+# Railway injeta essa variável automaticamente quando o Postgres está
+# vinculado ao mesmo projeto (Variables -> Add Reference -> Postgres.DATABASE_URL)
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 
 def conectar():
-    conn = sqlite3.connect(DATABASE)
-    # WAL permite bot e site (FastAPI) acessarem o banco ao mesmo tempo sem travar
-    conn.execute("PRAGMA journal_mode=WAL")
-    return conn
+    if not DATABASE_URL:
+        raise RuntimeError(
+            "DATABASE_URL não configurada. No Railway, vá em Variables -> "
+            "Add Reference -> selecione o serviço Postgres -> DATABASE_URL. "
+            "Localmente, copie a connection string da aba 'Connect' do "
+            "Postgres no Railway e coloque no seu .env."
+        )
+    return psycopg2.connect(DATABASE_URL)
 
 
 def criar_tabelas():
     conn = conectar()
     cursor = conn.cursor()
 
+    # BIGINT é obrigatório aqui: IDs do Discord (snowflakes) não cabem
+    # em INTEGER de 32 bits do Postgres.
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS usuarios (
-            id INTEGER PRIMARY KEY,
+            id BIGINT PRIMARY KEY,
             level INTEGER DEFAULT 1,
             xp INTEGER DEFAULT 0,
             pixels INTEGER DEFAULT 0,
             conquistas TEXT DEFAULT '',
-            ultimo_clique_site INTEGER DEFAULT 0,
+            ultimo_clique_site BIGINT DEFAULT 0,
             streak_atual INTEGER DEFAULT 0
         )
     """)
 
-    # Contadores globais do site (servidores, comandos executados, etc.)
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS estatisticas (
             chave TEXT PRIMARY KEY,
-            valor INTEGER DEFAULT 0
+            valor BIGINT DEFAULT 0
         )
     """)
 
     for chave in ("servidores", "comandos_executados"):
         cursor.execute(
-            "INSERT OR IGNORE INTO estatisticas (chave, valor) VALUES (?, 0)",
+            "INSERT INTO estatisticas (chave, valor) VALUES (%s, 0) "
+            "ON CONFLICT (chave) DO NOTHING",
             (chave,)
         )
 
     conn.commit()
-    conn.close()
-
-    _migrar_colunas()
-
-
-def _migrar_colunas():
-    """Adiciona colunas novas em bancos já existentes, sem apagar dados."""
-    conn = conectar()
-    cursor = conn.cursor()
-
-    cursor.execute("PRAGMA table_info(usuarios)")
-    colunas = [linha[1] for linha in cursor.fetchall()]
-
-    if "ultimo_clique_site" not in colunas:
-        cursor.execute(
-            "ALTER TABLE usuarios ADD COLUMN ultimo_clique_site INTEGER DEFAULT 0"
-        )
-
-    if "streak_atual" not in colunas:
-        cursor.execute(
-            "ALTER TABLE usuarios ADD COLUMN streak_atual INTEGER DEFAULT 0"
-        )
-
-    conn.commit()
+    cursor.close()
     conn.close()
 
 
@@ -74,11 +64,12 @@ def criar_usuario(user_id):
     cursor = conn.cursor()
 
     cursor.execute(
-        "INSERT OR IGNORE INTO usuarios (id) VALUES (?)",
+        "INSERT INTO usuarios (id) VALUES (%s) ON CONFLICT (id) DO NOTHING",
         (user_id,)
     )
 
     conn.commit()
+    cursor.close()
     conn.close()
 
 
@@ -90,12 +81,13 @@ def pegar_perfil(user_id):
         """
         SELECT id, level, xp, pixels, conquistas
         FROM usuarios
-        WHERE id = ?
+        WHERE id = %s
         """,
         (user_id,)
     )
 
     resultado = cursor.fetchone()
+    cursor.close()
     conn.close()
     return resultado
 
@@ -105,11 +97,12 @@ def adicionar_xp(user_id, quantidade):
     cursor = conn.cursor()
 
     cursor.execute(
-        "UPDATE usuarios SET xp = xp + ? WHERE id = ?",
+        "UPDATE usuarios SET xp = xp + %s WHERE id = %s",
         (quantidade, user_id)
     )
 
     conn.commit()
+    cursor.close()
     conn.close()
 
 
@@ -123,12 +116,13 @@ def subir_level(user_id):
         SET level = level + 1,
             pixels = pixels + 100,
             xp = 0
-        WHERE id = ?
+        WHERE id = %s
         """,
         (user_id,)
     )
 
     conn.commit()
+    cursor.close()
     conn.close()
 
 
@@ -138,11 +132,12 @@ def adicionar_pixels(user_id, quantidade):
     cursor = conn.cursor()
 
     cursor.execute(
-        "UPDATE usuarios SET pixels = pixels + ? WHERE id = ?",
+        "UPDATE usuarios SET pixels = pixels + %s WHERE id = %s",
         (quantidade, user_id)
     )
 
     conn.commit()
+    cursor.close()
     conn.close()
 
 
@@ -156,11 +151,12 @@ def pegar_estado_daily(user_id):
     cursor = conn.cursor()
 
     cursor.execute(
-        "SELECT pixels, ultimo_clique_site, streak_atual FROM usuarios WHERE id = ?",
+        "SELECT pixels, ultimo_clique_site, streak_atual FROM usuarios WHERE id = %s",
         (user_id,)
     )
 
     resultado = cursor.fetchone()
+    cursor.close()
     conn.close()
     return resultado
 
@@ -173,15 +169,16 @@ def registrar_claim_diario(user_id, agora, pixels_ganhos, novo_streak):
     cursor.execute(
         """
         UPDATE usuarios
-        SET pixels = pixels + ?,
-            ultimo_clique_site = ?,
-            streak_atual = ?
-        WHERE id = ?
+        SET pixels = pixels + %s,
+            ultimo_clique_site = %s,
+            streak_atual = %s
+        WHERE id = %s
         """,
         (pixels_ganhos, agora, novo_streak, user_id)
     )
 
     conn.commit()
+    cursor.close()
     conn.close()
 
 
@@ -196,13 +193,14 @@ def definir_estatistica(chave, valor):
 
     cursor.execute(
         """
-        INSERT INTO estatisticas (chave, valor) VALUES (?, ?)
-        ON CONFLICT(chave) DO UPDATE SET valor = excluded.valor
+        INSERT INTO estatisticas (chave, valor) VALUES (%s, %s)
+        ON CONFLICT (chave) DO UPDATE SET valor = EXCLUDED.valor
         """,
         (chave, valor)
     )
 
     conn.commit()
+    cursor.close()
     conn.close()
 
 
@@ -212,11 +210,12 @@ def incrementar_estatistica(chave, quantidade=1):
     cursor = conn.cursor()
 
     cursor.execute(
-        "UPDATE estatisticas SET valor = valor + ? WHERE chave = ?",
+        "UPDATE estatisticas SET valor = valor + %s WHERE chave = %s",
         (quantidade, chave)
     )
 
     conn.commit()
+    cursor.close()
     conn.close()
 
 
@@ -231,6 +230,7 @@ def pegar_estatisticas():
     cursor.execute("SELECT COUNT(*), COALESCE(SUM(pixels), 0) FROM usuarios")
     total_usuarios, total_pixels = cursor.fetchone()
 
+    cursor.close()
     conn.close()
 
     return {
