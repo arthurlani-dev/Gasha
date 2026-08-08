@@ -76,7 +76,7 @@
   }
 
   function formatNumber(n) {
-    return n.toLocaleString("pt-BR");
+    return n.toLocaleString("en-US");
   }
 
   function renderStreak(claimedDays, streak) {
@@ -125,8 +125,8 @@
     if (els.claimBtn) {
       els.claimBtn.disabled = false;
       els.claimBtn.classList.remove("is-cooldown");
-      els.claimBtn.querySelector(".claim-btn-label").textContent = "Coletar";
-      els.claimBtn.querySelector(".claim-btn-sub").textContent = "Toque para abrir";
+      els.claimBtn.querySelector(".claim-btn-label").textContent = "Claim";
+      els.claimBtn.querySelector(".claim-btn-sub").textContent = "Tap to open";
     }
     if (els.cooldownWrap) els.cooldownWrap.style.display = "none";
   }
@@ -135,8 +135,8 @@
     if (els.claimBtn) {
       els.claimBtn.disabled = true;
       els.claimBtn.classList.add("is-cooldown");
-      els.claimBtn.querySelector(".claim-btn-label").textContent = "Coletado";
-      els.claimBtn.querySelector(".claim-btn-sub").textContent = "Volte amanhã";
+      els.claimBtn.querySelector(".claim-btn-label").textContent = "Claimed";
+      els.claimBtn.querySelector(".claim-btn-sub").textContent = "Come back tomorrow";
     }
     if (els.cooldownWrap) els.cooldownWrap.style.display = "";
   }
@@ -174,10 +174,10 @@
       renderStreak(result.claimedDays, result.streak);
       startCountdown(result.nextClaimAt);
     } catch (err) {
-      // Se o servidor disse que o cooldown já estava ativo (ex: outra aba
-      // coletou primeiro), resincroniza com o estado real em vez de só
-      // liberar o botão de novo.
-      console.warn("Falha ao coletar recompensa:", err.message);
+      // If the server says the cooldown is already active (e.g. another tab
+      // claimed first), resync with the real state instead of just
+      // re-enabling the button.
+      console.warn("Failed to claim reward:", err.message);
       try {
         await refreshFromStatus();
       } catch {
@@ -219,7 +219,7 @@
     if (els.loginBtn) {
       els.loginBtn.addEventListener("click", async () => {
         els.loginBtn.disabled = true;
-        els.loginBtn.textContent = "Conectando…";
+        els.loginBtn.textContent = "Connecting…";
         await GashaAPI.loginWithDiscord();
       });
     }

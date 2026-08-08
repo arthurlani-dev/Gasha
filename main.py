@@ -13,7 +13,7 @@ from database.database import (
 
 load_dotenv()
 
-TOKEN = os.getenv("DISCORD_TOKEN")
+TOKEN = os.getenv("DISCORD_TOKEN", "").strip() or None
 
 
 intents = discord.Intents.all()

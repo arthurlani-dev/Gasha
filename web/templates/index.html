@@ -1,15 +1,15 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gasha — O bot de gamificação, economia e recompensas para o seu Discord</title>
-<meta name="description" content="Gasha transforma seu servidor Discord em um universo de níveis, economia com Pixels, missões e recompensas diárias. Adicione grátis em segundos.">
+<title>Gasha — The gamification, economy and rewards bot for your Discord</title>
+<meta name="description" content="Gasha turns your Discord server into a universe of levels, a Pixels economy, quests and daily rewards. Add it for free in seconds.">
 <meta name="theme-color" content="#0a0614">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Gasha — Gamificação, economia e recompensas para o seu Discord">
-<meta property="og:description" content="Níveis, missões, rankings e a moeda Pixels: tudo para manter seu servidor Discord vivo e engajado.">
+<meta property="og:title" content="Gasha — Gamification, economy and rewards for your Discord">
+<meta property="og:description" content="Levels, quests, leaderboards and the Pixels currency: everything to keep your Discord server alive and engaged.">
 
 <link rel="icon" type="image/svg+xml" href="/static/img/favicon.svg">
 
@@ -21,32 +21,32 @@
 <link rel="stylesheet" href="/static/css/home.css">
 </head>
 <body>
-<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<a class="skip-link" href="#conteudo">Skip to content</a>
 
 <!-- ============================== NAV ============================== -->
 <header class="nav">
   <div class="nav-inner">
-    <a href="#inicio" class="brand" aria-label="Gasha — início">
+    <a href="#inicio" class="brand" aria-label="Gasha — home">
       <span class="capsule-mark" aria-hidden="true"><span class="dot"></span></span>
       <span class="brand-word">Gasha<span>.</span></span>
     </a>
 
-    <nav class="nav-links" aria-label="Navegação principal">
-      <a href="#recursos">Recursos</a>
-      <a href="#como-funciona">Como funciona</a>
-      <a href="#painel">Painel</a>
-      <a href="#estatisticas">Estatísticas</a>
-      <a href="#depoimentos">Depoimentos</a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#recursos">Features</a>
+      <a href="#como-funciona">How it works</a>
+      <a href="#painel">Dashboard</a>
+      <a href="#estatisticas">Stats</a>
+      <a href="#depoimentos">Reviews</a>
       <a href="#faq">FAQ</a>
-      <a href="/daily">Recompensa diária</a>
+      <a href="/daily">Daily reward</a>
     </nav>
 
     <div class="nav-cta">
-      <a href="#" class="btn btn-ghost btn-sm">Servidor de suporte</a>
-      <a href="#" class="btn btn-primary btn-sm" data-burst>
-        Adicionar ao Discord
+      <a href="#" class="btn btn-ghost btn-sm">Support server</a>
+      <a href="{{ invite_url }}" class="btn btn-primary btn-sm" data-burst target="_blank" rel="noopener">
+        Add to Discord
       </a>
-      <button class="nav-burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-panel">
+      <button class="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-panel">
         <span></span>
       </button>
     </div>
@@ -54,16 +54,16 @@
 </header>
 
 <div class="mobile-panel" id="mobile-panel">
-  <a href="#recursos">Recursos</a>
-  <a href="#como-funciona">Como funciona</a>
-  <a href="#painel">Painel</a>
-  <a href="#estatisticas">Estatísticas</a>
-  <a href="#depoimentos">Depoimentos</a>
+  <a href="#recursos">Features</a>
+  <a href="#como-funciona">How it works</a>
+  <a href="#painel">Dashboard</a>
+  <a href="#estatisticas">Stats</a>
+  <a href="#depoimentos">Reviews</a>
   <a href="#faq">FAQ</a>
-  <a href="/daily">Recompensa diária</a>
+  <a href="/daily">Daily reward</a>
   <div class="nav-cta">
-    <a href="#" class="btn btn-ghost btn-block">Servidor de suporte</a>
-    <a href="#" class="btn btn-primary btn-block" data-burst>Adicionar ao Discord</a>
+    <a href="#" class="btn btn-ghost btn-block">Support server</a>
+    <a href="{{ invite_url }}" class="btn btn-primary btn-block" data-burst target="_blank" rel="noopener">Add to Discord</a>
   </div>
 </div>
 
@@ -94,26 +94,26 @@
       </div>
 
       <div class="hero-copy">
-        <span class="eyebrow">Bot de gamificação para Discord</span>
-        <h1>Cada comando é uma <span class="gradient-text is-gold">nova sorte.</span></h1>
-        <p class="section-lede">Gasha transforma seu servidor em um universo de níveis, economia e recompensas — com <strong style="color:var(--paper)">Pixels</strong>, a moeda global do bot, missões diárias e um painel feito para administrar tudo sem esforço.</p>
+        <span class="eyebrow">Gamification bot for Discord</span>
+        <h1>Every command is a <span class="gradient-text is-gold">new roll of luck.</span></h1>
+        <p class="section-lede">Gasha turns your server into a universe of levels, economy and rewards — with <strong style="color:var(--paper)">Pixels</strong>, the bot's global currency, daily quests and a dashboard built to manage it all effortlessly.</p>
 
         <div class="hero-cta">
-          <a href="#" class="btn btn-primary" data-burst>
+          <a href="{{ invite_url }}" class="btn btn-primary" data-burst target="_blank" rel="noopener">
             <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.3 5.4A18 18 0 0 0 15.6 4l-.3.6a15 15 0 0 1 4 1.5"/><path d="M3.7 5.4A18 18 0 0 1 8.4 4l.3.6a15 15 0 0 0-4 1.5"/><path d="M4 8.2C4 14 5 17 5 17s2 1.6 5 1.8l.7-1.4"/><path d="M20 8.2C20 14 19 17 19 17s-2 1.6-5 1.8l-.7-1.4"/><circle cx="9" cy="12.3" r="1.3" fill="currentColor" stroke="none"/><circle cx="15" cy="12.3" r="1.3" fill="currentColor" stroke="none"/></svg>
-            Adicionar ao Discord
+            Add to Discord
           </a>
           <a href="/daily" class="btn btn-ghost">
-            Ver recompensa diária
+            See daily reward
           </a>
         </div>
 
         <div class="hero-proof">
-          <div class="hero-proof-stat"><b>12.400+</b><span>servidores ativos</span></div>
+          <div class="hero-proof-stat"><b>12,400+</b><span>active servers</span></div>
           <div class="hero-proof-sep"></div>
-          <div class="hero-proof-stat"><b>480 mil+</b><span>usuários</span></div>
+          <div class="hero-proof-stat"><b>480K+</b><span>users</span></div>
           <div class="hero-proof-sep"></div>
-          <div class="hero-proof-stat"><b>4.9/5</b><span>satisfação média*</span></div>
+          <div class="hero-proof-stat"><b>4.9/5</b><span>average rating*</span></div>
         </div>
       </div>
     </div>
@@ -121,8 +121,8 @@
 
   <div class="marquee" aria-hidden="true">
     <div class="marquee-track">
-      <span>Gamificação</span><span>Economia</span><span>Níveis</span><span>Missões</span><span>Recompensas</span><span>Rankings</span><span>Eventos</span><span>Perfis</span>
-      <span>Gamificação</span><span>Economia</span><span>Níveis</span><span>Missões</span><span>Recompensas</span><span>Rankings</span><span>Eventos</span><span>Perfis</span>
+      <span>Gamification</span><span>Economy</span><span>Levels</span><span>Quests</span><span>Rewards</span><span>Leaderboards</span><span>Events</span><span>Profiles</span>
+      <span>Gamification</span><span>Economy</span><span>Levels</span><span>Quests</span><span>Rewards</span><span>Leaderboards</span><span>Events</span><span>Profiles</span>
     </div>
   </div>
 
@@ -130,73 +130,73 @@
   <section class="section" id="recursos">
     <div class="wrap">
       <div class="section-head reveal">
-        <span class="eyebrow">Recursos</span>
-        <h2 class="section-title">Tudo que um servidor precisa para <span class="gradient-text">viciar</span> a comunidade — no bom sentido.</h2>
-        <p class="section-lede">Um sistema completo, pensado para dar motivo ao membro voltar todos os dias.</p>
+        <span class="eyebrow">Features</span>
+        <h2 class="section-title">Everything a server needs to <span class="gradient-text">hook</span> the community — in a good way.</h2>
+        <p class="section-lede">A complete system, built to give members a reason to come back every day.</p>
       </div>
 
       <div class="feature-grid reveal-stagger">
         <article class="feature-card reveal">
           <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="8.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="8.5" cy="15.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/></svg></div>
-          <h3>Gamificação</h3>
-          <p>XP por mensagem, comando e conquista. Cada ação no servidor conta para a evolução do membro.</p>
+          <h3>Gamification</h3>
+          <p>XP for messages, commands and achievements. Every action on the server counts toward a member's growth.</p>
           <span class="feature-tag">Core</span>
         </article>
 
         <article class="feature-card reveal">
           <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8.5"/><path d="M9.5 14.5c.4 1 1.4 1.6 2.5 1.6 1.5 0 2.6-.9 2.6-2.1 0-2.9-5.1-1.5-5.1-4.3 0-1.2 1.1-2.1 2.5-2.1 1.1 0 2.1.6 2.5 1.6"/><path d="M12 6.5v1M12 16.5v1"/></svg></div>
-          <h3>Economia</h3>
-          <p>Pixels, a moeda global do bot. Ganhe, gaste em um mercado interno e troque entre membros.</p>
+          <h3>Economy</h3>
+          <p>Pixels, the bot's global currency. Earn it, spend it in an in-server market, and trade it between members.</p>
           <span class="feature-tag">Pixels</span>
         </article>
 
         <article class="feature-card reveal">
           <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 17l5-5 4 4 8-8"/><path d="M15 8h5v5"/></svg></div>
-          <h3>Sistema de níveis</h3>
-          <p>Curva de progressão balanceada, com cargos automáticos liberados a cada etapa.</p>
-          <span class="feature-tag">Progressão</span>
+          <h3>Leveling system</h3>
+          <p>A balanced progression curve, with automatic roles unlocked at every milestone.</p>
+          <span class="feature-tag">Progression</span>
         </article>
 
         <article class="feature-card reveal">
           <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 12v8a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-8"/><rect x="2.5" y="8" width="19" height="4.2" rx="1"/><path d="M12 8v13"/><path d="M12 8c-1.2-3-3-4.5-4.6-4.5-1.4 0-2.4 1-2.4 2.3C5 7.3 6.4 8 12 8Z"/><path d="M12 8c1.2-3 3-4.5 4.6-4.5 1.4 0 2.4 1 2.4 2.3C19 7.3 17.6 8 12 8Z"/></svg></div>
-          <h3>Recompensas</h3>
-          <p>Recompensa diária, cápsulas surpresa e drops aleatórios para manter o servidor ativo.</p>
+          <h3>Rewards</h3>
+          <p>Daily reward, surprise capsules and random drops to keep the server active.</p>
           <span class="feature-tag">/daily</span>
         </article>
 
         <article class="feature-card reveal">
           <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/></svg></div>
-          <h3>Missões</h3>
-          <p>Desafios diários e semanais que dão ritmo e objetivo real para a comunidade.</p>
-          <span class="feature-tag">Diário · Semanal</span>
+          <h3>Quests</h3>
+          <p>Daily and weekly challenges that give the community real rhythm and purpose.</p>
+          <span class="feature-tag">Daily · Weekly</span>
         </article>
 
         <article class="feature-card reveal">
           <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c0-3.6 3.1-6.5 7-6.5s7 2.9 7 6.5"/></svg></div>
-          <h3>Perfil</h3>
-          <p>Cartão de perfil com título, nível, conquistas e estatísticas totalmente customizável.</p>
-          <span class="feature-tag">/perfil</span>
+          <h3>Profile</h3>
+          <p>A fully customizable profile card with title, level, achievements and stats.</p>
+          <span class="feature-tag">/profile</span>
         </article>
 
         <article class="feature-card reveal">
           <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 21V10M12 21V3M20 21v-7"/></svg></div>
-          <h3>Rankings</h3>
-          <p>Rankings globais e por servidor, atualizados em tempo real por XP, Pixels e conquistas.</p>
+          <h3>Leaderboards</h3>
+          <p>Global and per-server leaderboards, updated in real time by XP, Pixels and achievements.</p>
           <span class="feature-tag">/top</span>
         </article>
 
         <article class="feature-card reveal">
           <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="4.5" width="17" height="16" rx="3"/><path d="M3.5 9.5h17"/><path d="M8 3v3M16 3v3"/><path d="m9 15 2 2 4-4"/></svg></div>
-          <h3>Eventos</h3>
-          <p>Eventos sazonais com recompensas exclusivas e cápsulas de tempo limitado.</p>
-          <span class="feature-tag">Sazonal</span>
+          <h3>Events</h3>
+          <p>Seasonal events with exclusive rewards and limited-time capsules.</p>
+          <span class="feature-tag">Seasonal</span>
         </article>
 
         <article class="feature-card is-ghost reveal">
           <div>
             <div class="feature-icon" style="margin-inline:auto;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/></svg></div>
-            <h3>E muito mais</h3>
-            <p>Novos sistemas todo mês — sugestões da comunidade viram atualizações reais.</p>
+            <h3>And much more</h3>
+            <p>New systems every month — community suggestions become real updates.</p>
           </div>
         </article>
       </div>
@@ -209,41 +209,41 @@
   <section class="section" id="como-funciona">
     <div class="wrap">
       <div class="section-head center reveal" style="margin-inline:auto;text-align:center;">
-        <span class="eyebrow">Como funciona</span>
-        <h2 class="section-title">Da entrada no servidor à primeira recompensa.</h2>
-        <p class="section-lede" style="margin-inline:auto;">Um caminho simples — pensado para que o membro sinta progresso desde o primeiro minuto.</p>
+        <span class="eyebrow">How it works</span>
+        <h2 class="section-title">From joining the server to the first reward.</h2>
+        <p class="section-lede" style="margin-inline:auto;">A simple path — designed so members feel progress from the very first minute.</p>
       </div>
 
       <div class="flow reveal-stagger">
         <div class="flow-step reveal">
           <div class="flow-num">01</div>
-          <h3>Entre no servidor</h3>
-          <p>Adicione o Gasha e ele já chega configurado com níveis, economia e recompensas prontos para uso.</p>
+          <h3>Join the server</h3>
+          <p>Add Gasha and it arrives already configured, with levels, economy and rewards ready to use.</p>
         </div>
         <div class="flow-step reveal">
           <div class="flow-num">02</div>
-          <h3>Interaja</h3>
-          <p>Mande mensagens, use comandos e participe de eventos para ganhar XP e Pixels naturalmente.</p>
+          <h3>Interact</h3>
+          <p>Send messages, use commands and join events to naturally earn XP and Pixels.</p>
         </div>
         <div class="flow-step reveal">
           <div class="flow-num">03</div>
-          <h3>Suba de nível</h3>
-          <p>Desbloqueie cargos, títulos e badges de perfil conforme sua curva de progressão avança.</p>
+          <h3>Level up</h3>
+          <p>Unlock roles, titles and profile badges as your progression curve advances.</p>
         </div>
         <div class="flow-step reveal">
           <div class="flow-num">04</div>
-          <h3>Colete e troque</h3>
-          <p>Abra cápsulas, cumpra missões e administre seus Pixels direto pelo perfil ou pelo painel.</p>
+          <h3>Collect and trade</h3>
+          <p>Open capsules, complete quests and manage your Pixels straight from your profile or the dashboard.</p>
         </div>
       </div>
 
       <div class="xp-demo reveal">
         <div class="xp-avatar">L7</div>
         <div class="xp-info">
-          <div class="xp-info-top"><span>Progresso até o nível 8</span><b>3.240 / 5.200 XP</b></div>
+          <div class="xp-info-top"><span>Progress to level 8</span><b>3,240 / 5,200 XP</b></div>
           <div class="xp-track" style="--xp:62%;"><div class="xp-fill"></div></div>
         </div>
-        <span class="xp-level mono">+18 XP por mensagem</span>
+        <span class="xp-level mono">+18 XP per message</span>
       </div>
     </div>
   </section>
@@ -252,29 +252,29 @@
   <section class="section stats-section" id="estatisticas">
     <div class="wrap">
       <div class="section-head center reveal" style="margin-inline:auto;text-align:center;">
-        <span class="eyebrow">Em números</span>
-        <h2 class="section-title">O tamanho da <span class="gradient-text is-gold">sorte</span> distribuída até aqui.</h2>
+        <span class="eyebrow">By the numbers</span>
+        <h2 class="section-title">The amount of <span class="gradient-text is-gold">luck</span> handed out so far.</h2>
       </div>
 
       <div class="stats-grid reveal">
         <div class="stat-cell">
           <div class="stat-num" data-stat="servidores" data-count="12400" data-suffix="+">0</div>
-          <div class="stat-label">Servidores ativos</div>
+          <div class="stat-label">Active servers</div>
         </div>
         <div class="stat-cell">
           <div class="stat-num" data-stat="usuarios" data-count="483" data-suffix=" mil+">0</div>
-          <div class="stat-label">Usuários gerenciados</div>
+          <div class="stat-label">Users managed</div>
         </div>
         <div class="stat-cell">
           <div class="stat-num" data-stat="comandos" data-count="9.2" data-decimals="1" data-suffix="M+">0</div>
-          <div class="stat-label">Comandos executados</div>
+          <div class="stat-label">Commands run</div>
         </div>
         <div class="stat-cell">
           <div class="stat-num" data-stat="pixels" data-count="3.1" data-decimals="1" data-suffix="B+">0</div>
-          <div class="stat-label">Pixels distribuídos</div>
+          <div class="stat-label">Pixels distributed</div>
         </div>
       </div>
-      <p class="stats-note">*Atualizado automaticamente a partir do banco de dados do bot. Os números acima aparecem como placeholder só até a API responder.</p>
+      <p class="stats-note">*Updated automatically from the bot's database. The numbers above are placeholders only until the API responds.</p>
     </div>
   </section>
 
@@ -284,96 +284,96 @@
   <section class="section panel-section" id="painel">
     <div class="wrap">
       <div class="section-head center reveal" style="margin-inline:auto;text-align:center;">
-        <span class="eyebrow">Painel de controle</span>
-        <h2 class="section-title">Configure cada detalhe sem sair do navegador.</h2>
-        <p class="section-lede" style="margin-inline:auto;">Um construtor visual para recompensas, economia e cargos — com preview do embed em tempo real.</p>
+        <span class="eyebrow">Dashboard</span>
+        <h2 class="section-title">Configure every detail without leaving your browser.</h2>
+        <p class="section-lede" style="margin-inline:auto;">A visual builder for rewards, economy and roles — with a real-time embed preview.</p>
       </div>
 
       <div class="panel-mock reveal">
         <aside class="panel-sidebar">
           <div class="panel-brand"><span class="capsule-mark" style="width:28px;height:28px;"><span class="dot" style="width:7px;height:7px;margin:-3.5px 0 0 -3.5px;"></span></span><b>Gasha</b></div>
 
-          <div class="panel-nav-group">Geral</div>
+          <div class="panel-nav-group">General</div>
           <div class="panel-nav">
             <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Dashboard</a>
-            <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 9.5c.3-1 1.4-1.7 3-1.7 1.8 0 3 .9 3 2.1 0 2.8-6 1.4-6 4.2 0 1.2 1.2 2.1 3 2.1 1.6 0 2.7-.7 3-1.7"/></svg>Economia</a>
-            <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17l5-5 4 4 8-8"/></svg>Níveis</a>
+            <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 9.5c.3-1 1.4-1.7 3-1.7 1.8 0 3 .9 3 2.1 0 2.8-6 1.4-6 4.2 0 1.2 1.2 2.1 3 2.1 1.6 0 2.7-.7 3-1.7"/></svg>Economy</a>
+            <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17l5-5 4 4 8-8"/></svg>Levels</a>
           </div>
 
-          <div class="panel-nav-group">Engajamento</div>
+          <div class="panel-nav-group">Engagement</div>
           <div class="panel-nav">
-            <a href="#" class="is-active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 12v7a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-7"/><rect x="2.5" y="8" width="19" height="4" rx="1"/><path d="M12 8v12"/></svg>Recompensa diária</a>
-            <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.2"/></svg>Missões</a>
-            <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21V10M12 21V3M20 21v-7"/></svg>Rankings</a>
+            <a href="#" class="is-active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 12v7a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-7"/><rect x="2.5" y="8" width="19" height="4" rx="1"/><path d="M12 8v12"/></svg>Daily reward</a>
+            <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.2"/></svg>Quests</a>
+            <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21V10M12 21V3M20 21v-7"/></svg>Leaderboards</a>
           </div>
 
-          <div class="panel-nav-group">Servidor</div>
+          <div class="panel-nav-group">Server</div>
           <div class="panel-nav">
-            <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8.5" cy="8" r="3.2"/><path d="M2.5 20c0-3.3 2.7-5.6 6-5.6s6 2.3 6 5.6"/><path d="M16 8.3a3 3 0 1 1 3.6 2.9"/><path d="M15.5 14.7c2.7.4 4.7 2.3 4.7 5.3"/></svg>Cargos</a>
-            <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 4 6.5v5c0 4.7 3.2 8.3 8 9.5 4.8-1.2 8-4.8 8-9.5v-5Z"/></svg>Moderação</a>
+            <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8.5" cy="8" r="3.2"/><path d="M2.5 20c0-3.3 2.7-5.6 6-5.6s6 2.3 6 5.6"/><path d="M16 8.3a3 3 0 1 1 3.6 2.9"/><path d="M15.5 14.7c2.7.4 4.7 2.3 4.7 5.3"/></svg>Roles</a>
+            <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 4 6.5v5c0 4.7 3.2 8.3 8 9.5 4.8-1.2 8-4.8 8-9.5v-5Z"/></svg>Moderation</a>
           </div>
         </aside>
 
         <div class="panel-main">
-          <div class="panel-main-head"><h4>Recompensa diária</h4><span>/daily</span></div>
-          <p class="panel-main-sub">Defina os valores e a mensagem exibida quando um membro coleta os Pixels do dia.</p>
+          <div class="panel-main-head"><h4>Daily reward</h4><span>/daily</span></div>
+          <p class="panel-main-sub">Set the amounts and the message shown when a member claims today's Pixels.</p>
 
           <div class="panel-row">
             <div class="panel-field">
-              <label>Quantidade mínima</label>
+              <label>Minimum amount</label>
               <div class="fake-input">120 Pixels</div>
             </div>
             <div class="panel-field">
-              <label>Quantidade máxima</label>
+              <label>Maximum amount</label>
               <div class="fake-input">380 Pixels</div>
             </div>
           </div>
 
           <div class="panel-field">
-            <label>Bônus de streak (7 dias)</label>
-            <div class="fake-input">+ 25% de Pixels na semana completa</div>
+            <label>Streak bonus (7 days)</label>
+            <div class="fake-input">+ 25% Pixels for a full week</div>
           </div>
 
           <div class="panel-field">
-            <label>Canal de anúncio de recompensa</label>
-            <div class="fake-input">#geral</div>
+            <label>Reward announcement channel</label>
+            <div class="fake-input">#general</div>
           </div>
 
           <div class="panel-field">
             <label>Status</label>
             <div class="chip-row">
-              <span class="chip is-on">Ativo</span>
-              <span class="chip">Somente cargos VIP</span>
-              <span class="chip">Notificar por DM</span>
+              <span class="chip is-on">Active</span>
+              <span class="chip">VIP roles only</span>
+              <span class="chip">Notify by DM</span>
             </div>
           </div>
         </div>
 
         <div class="panel-preview">
-          <div class="panel-preview-label">Preview do embed</div>
+          <div class="panel-preview-label">Embed preview</div>
           <div class="discord-embed">
             <div class="discord-embed-top">
               <span class="capsule-mark" style="width:22px;height:22px;"><span class="dot" style="width:5px;height:5px;margin:-2.5px 0 0 -2.5px;"></span></span>
-              <div><b>Gasha</b><br><span>hoje às 09:12</span></div>
+              <div><b>Gasha</b><br><span>today at 09:12</span></div>
             </div>
-            <h5>✨ Recompensa diária coletada!</h5>
-            <p>Você recebeu Pixels por voltar hoje. Continue sua sequência para ganhar bônus ainda maiores.</p>
+            <h5>✨ Daily reward claimed!</h5>
+            <p>You received Pixels for coming back today. Keep your streak going to earn even bigger bonuses.</p>
             <div class="discord-embed-fields">
-              <div><b>RECEBIDO</b><span>+248 Pixels</span></div>
-              <div><b>SALDO ATUAL</b><span>2.698 Pixels</span></div>
-              <div><b>SEQUÊNCIA</b><span>4 / 7 dias</span></div>
-              <div><b>PRÓXIMA EM</b><span>23h 59m</span></div>
+              <div><b>RECEIVED</b><span>+248 Pixels</span></div>
+              <div><b>CURRENT BALANCE</b><span>2,698 Pixels</span></div>
+              <div><b>STREAK</b><span>4 / 7 days</span></div>
+              <div><b>NEXT IN</b><span>23h 59m</span></div>
             </div>
           </div>
 
           <p class="panel-preview-note">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
-            Interface ilustrativa do painel — pronta para ser conectada à sua API de configuração.
+            Illustrative dashboard interface — ready to be connected to your configuration API.
           </p>
         </div>
       </div>
 
-      <p class="panel-caption">Disponível para administradores em <span class="mono">painel.gasha.app</span> · login com Discord</p>
+      <p class="panel-caption">Available to admins at <span class="mono">panel.gasha.app</span> · sign in with Discord</p>
     </div>
   </section>
 
@@ -381,9 +381,9 @@
   <section class="section" id="depoimentos">
     <div class="wrap">
       <div class="section-head center reveal" style="margin-inline:auto;text-align:center;">
-        <span class="eyebrow">Depoimentos</span>
-        <h2 class="section-title">O que administradores dizem sobre o Gasha.</h2>
-        <p class="section-lede" style="margin-inline:auto;">Espaço reservado para os primeiros feedbacks reais da comunidade.</p>
+        <span class="eyebrow">Reviews</span>
+        <h2 class="section-title">What admins say about Gasha.</h2>
+        <p class="section-lede" style="margin-inline:auto;">Reserved space for the community's first real feedback.</p>
       </div>
 
       <div class="testi-grid reveal-stagger">
@@ -395,10 +395,10 @@
             <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.6 5.8 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18l1.4-6.3L1 7.4l6.4-.6z"/></svg>
             <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.6 5.8 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18l1.4-6.3L1 7.4l6.4-.6z"/></svg>
           </div>
-          <p class="testi-quote">A recompensa diária mudou o horário de pico do nosso servidor. Todo mundo entra de manhã só para coletar.</p>
+          <p class="testi-quote">The daily reward changed our server's peak hours. Everyone logs in every morning just to claim it.</p>
           <div class="testi-person">
             <div class="testi-avatar" style="background:var(--grad-arcane);">RM</div>
-            <div><b>Dono de servidor</b><span>Comunidade gamer · 8 mil membros</span></div>
+            <div><b>Server owner</b><span>Gaming community · 8K members</span></div>
           </div>
         </article>
 
@@ -410,10 +410,10 @@
             <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.6 5.8 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18l1.4-6.3L1 7.4l6.4-.6z"/></svg>
             <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.6 5.8 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18l1.4-6.3L1 7.4l6.4-.6z"/></svg>
           </div>
-          <p class="testi-quote">O painel é surpreendentemente simples. Configurei toda a economia do zero em uma tarde.</p>
+          <p class="testi-quote">The dashboard is surprisingly simple. I set up the whole economy from scratch in one afternoon.</p>
           <div class="testi-person">
             <div class="testi-avatar" style="background:var(--grad-fever);">JT</div>
-            <div><b>Moderador</b><span>Servidor de estudos · 3 mil membros</span></div>
+            <div><b>Moderator</b><span>Study community · 3K members</span></div>
           </div>
         </article>
 
@@ -425,10 +425,10 @@
             <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.6 5.8 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18l1.4-6.3L1 7.4l6.4-.6z"/></svg>
             <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1l2.6 5.8 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18l1.4-6.3L1 7.4l6.4-.6z"/></svg>
           </div>
-          <p class="testi-quote">As missões semanais deram um motivo real para os membros conversarem entre si de novo.</p>
+          <p class="testi-quote">The weekly quests gave members a real reason to start talking to each other again.</p>
           <div class="testi-person">
             <div class="testi-avatar" style="background:var(--grad-gold); color:#1a0a30;">PF</div>
-            <div><b>Administrador</b><span>Comunidade de anime · 12 mil membros</span></div>
+            <div><b>Admin</b><span>Anime community · 12K members</span></div>
           </div>
         </article>
       </div>
@@ -439,34 +439,34 @@
   <section class="section" id="faq">
     <div class="wrap container-tight">
       <div class="section-head center reveal" style="margin-inline:auto;text-align:center;">
-        <span class="eyebrow">Perguntas frequentes</span>
-        <h2 class="section-title">Ainda com dúvidas?</h2>
+        <span class="eyebrow">Frequently asked questions</span>
+        <h2 class="section-title">Still have questions?</h2>
       </div>
 
       <div class="faq-list reveal">
         <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">O Gasha é gratuito?<span class="plus"></span></button>
-          <div class="faq-a"><p>Sim. Todos os sistemas de níveis, economia e recompensa diária funcionam no plano gratuito. Recursos Premium são opcionais e ampliam limites e personalização.</p></div>
+          <button class="faq-q" aria-expanded="false">Is Gasha free?<span class="plus"></span></button>
+          <div class="faq-a"><p>Yes. All the leveling, economy and daily reward systems work on the free plan. Premium features are optional and expand limits and customization.</p></div>
         </div>
         <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">Como funciona a moeda Pixels?<span class="plus"></span></button>
-          <div class="faq-a"><p>Pixels é a moeda global do Gasha. Você ganha ao interagir, cumprir missões e coletar a recompensa diária, e pode gastar no mercado interno ou trocar com outros membros.</p></div>
+          <button class="faq-q" aria-expanded="false">How does the Pixels currency work?<span class="plus"></span></button>
+          <div class="faq-a"><p>Pixels is Gasha's global currency. You earn it by interacting, completing quests and claiming the daily reward, and can spend it in the in-server market or trade it with other members.</p></div>
         </div>
         <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">Preciso de permissões especiais para adicionar?<span class="plus"></span></button>
-          <div class="faq-a"><p>Você precisa ser administrador do servidor para autorizar a instalação via OAuth2 do Discord — o mesmo fluxo usado por qualquer bot confiável.</p></div>
+          <button class="faq-q" aria-expanded="false">Do I need special permissions to add it?<span class="plus"></span></button>
+          <div class="faq-a"><p>You need to be a server administrator to authorize the install via Discord's OAuth2 — the same flow used by any trusted bot.</p></div>
         </div>
         <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">Existe uma versão Premium?<span class="plus"></span></button>
-          <div class="faq-a"><p>Sim, com multiplicadores de XP e Pixels, cápsulas exclusivas e personalização avançada do painel. Veja detalhes no servidor de suporte.</p></div>
+          <button class="faq-q" aria-expanded="false">Is there a Premium version?<span class="plus"></span></button>
+          <div class="faq-a"><p>Yes, with XP and Pixels multipliers, exclusive capsules and advanced dashboard customization. See details on the support server.</p></div>
         </div>
         <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">Meus dados ficam salvos com segurança?<span class="plus"></span></button>
-          <div class="faq-a"><p>Armazenamos apenas o necessário para o funcionamento dos sistemas de progressão e economia, seguindo as diretrizes de dados de aplicativos do Discord.</p></div>
+          <button class="faq-q" aria-expanded="false">Is my data stored securely?<span class="plus"></span></button>
+          <div class="faq-a"><p>We only store what's needed for the progression and economy systems to work, following Discord's app data guidelines.</p></div>
         </div>
         <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">Como sugiro uma funcionalidade nova?<span class="plus"></span></button>
-          <div class="faq-a"><p>Abra um pedido no servidor de suporte — as melhores sugestões da comunidade viram atualizações reais todo mês.</p></div>
+          <button class="faq-q" aria-expanded="false">How do I suggest a new feature?<span class="plus"></span></button>
+          <div class="faq-a"><p>Open a request on the support server — the community's best suggestions become real updates every month.</p></div>
         </div>
       </div>
     </div>
@@ -476,12 +476,12 @@
   <section class="section">
     <div class="wrap">
       <div class="final-cta reveal">
-        <span class="eyebrow" style="justify-content:center;">Comece agora</span>
-        <h2>Sua sorte no Discord começa com um clique.</h2>
-        <p>Leva menos de um minuto para configurar. Grátis, sem cartão, sem complicação.</p>
+        <span class="eyebrow" style="justify-content:center;">Get started</span>
+        <h2>Your luck on Discord starts with one click.</h2>
+        <p>Takes less than a minute to set up. Free, no card, no hassle.</p>
         <div class="hero-cta">
-          <a href="#" class="btn btn-primary" data-burst>Adicionar ao Discord</a>
-          <a href="/daily" class="btn btn-ghost">Testar recompensa diária</a>
+          <a href="{{ invite_url }}" class="btn btn-primary" data-burst target="_blank" rel="noopener">Add to Discord</a>
+          <a href="/daily" class="btn btn-ghost">Try the daily reward</a>
         </div>
       </div>
     </div>
@@ -495,8 +495,8 @@
     <div class="footer-top">
       <div class="footer-brand">
         <a href="#inicio" class="brand"><span class="capsule-mark"><span class="dot"></span></span><span class="brand-word">Gasha<span>.</span></span></a>
-        <p>Gamificação, economia e recompensas para transformar qualquer servidor em uma comunidade viva.</p>
-        <div class="socials" aria-label="Redes sociais">
+        <p>Gamification, economy and rewards to turn any server into a living community.</p>
+        <div class="socials" aria-label="Social media">
           <a href="#" aria-label="Discord"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.3 5.4a18 18 0 0 0-4.6-1.4l-.3.6a15 15 0 0 1 4 1.5c-1.7-.8-3.4-1.3-5.1-1.5a12 12 0 0 0-4.6 0c-1.7.2-3.4.7-5.1 1.5a15 15 0 0 1 4-1.5l-.3-.6a18 18 0 0 0-4.6 1.4C1.6 9.8 1 14.1 1.3 18.3a18 18 0 0 0 5.5 2.7l.9-1.5a11 11 0 0 1-1.7-.8l.4-.3a13 13 0 0 0 11.2 0l.4.3a11 11 0 0 1-1.7.8l.9 1.5a18 18 0 0 0 5.5-2.7c.4-4.6-.7-8.9-2.4-12.9ZM8.9 15.5c-1 0-1.9-1-1.9-2.1 0-1.2.8-2.1 1.9-2.1s1.9 1 1.9 2.1c0 1.1-.8 2.1-1.9 2.1Zm6.2 0c-1 0-1.9-1-1.9-2.1 0-1.2.8-2.1 1.9-2.1s1.9 1 1.9 2.1c0 1.1-.8 2.1-1.9 2.1Z"/></svg></a>
           <a href="#" aria-label="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 3h3l-6.6 7.5L22.4 21h-6.1l-4.8-6.3L5.9 21H2.9l7.1-8.1L2 3h6.2l4.3 5.8Zm-1 16.2h1.7L7 4.7H5.2Z"/></svg></a>
           <a href="#" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.3-3.4-1.3-.5-1.1-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.7.4-1.1.6-1.4-2.3-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.6 0 0 .8-.3 2.7 1a9.3 9.3 0 0 1 4.9 0c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.3.1 2.6.6.7 1 1.6 1 2.7 0 3.9-2.3 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 12 2Z"/></svg></a>
@@ -505,32 +505,32 @@
       </div>
 
       <div class="footer-col">
-        <h4>Produto</h4>
+        <h4>Product</h4>
         <ul>
-          <li><a href="#recursos">Recursos</a></li>
-          <li><a href="#como-funciona">Como funciona</a></li>
-          <li><a href="#painel">Painel</a></li>
-          <li><a href="/daily">Recompensa diária</a></li>
+          <li><a href="#recursos">Features</a></li>
+          <li><a href="#como-funciona">How it works</a></li>
+          <li><a href="#painel">Dashboard</a></li>
+          <li><a href="/daily">Daily reward</a></li>
           <li><a href="#">Changelog</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
-        <h4>Comunidade</h4>
+        <h4>Community</h4>
         <ul>
-          <li><a href="#">Servidor de suporte</a></li>
-          <li><a href="#">Fan arts</a></li>
-          <li><a href="#">Equipe</a></li>
-          <li><a href="#">Patrocinadores</a></li>
+          <li><a href="#">Support server</a></li>
+          <li><a href="#">Fan art</a></li>
+          <li><a href="#">Team</a></li>
+          <li><a href="#">Sponsors</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
-        <h4>Recursos</h4>
+        <h4>Resources</h4>
         <ul>
-          <li><a href="#">Documentação</a></li>
-          <li><a href="#">Lista de comandos</a></li>
-          <li><a href="#">Status do bot</a></li>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">Command list</a></li>
+          <li><a href="#">Bot status</a></li>
           <li><a href="#faq">FAQ</a></li>
         </ul>
       </div>
@@ -538,16 +538,16 @@
       <div class="footer-col">
         <h4>Legal</h4>
         <ul>
-          <li><a href="#">Termos de uso</a></li>
-          <li><a href="#">Privacidade</a></li>
+          <li><a href="#">Terms of use</a></li>
+          <li><a href="#">Privacy</a></li>
         </ul>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <span>© <span data-year>2026</span> Gasha. Feito com 💜 para comunidades Discord.</span>
+      <span>© <span data-year>2026</span> Gasha. Made with 💜 for Discord communities.</span>
       <div class="footer-legal">
-        <span>Não afiliado à Discord Inc.</span>
+        <span>Not affiliated with Discord Inc.</span>
       </div>
     </div>
   </div>

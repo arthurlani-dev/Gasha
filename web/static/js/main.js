@@ -103,7 +103,7 @@
 
     try {
       const res = await fetch("/api/stats", { credentials: "include" });
-      if (!res.ok) throw new Error("stats indisponíveis");
+      if (!res.ok) throw new Error("stats unavailable");
       const data = await res.json();
 
       const valores = {
@@ -122,9 +122,9 @@
         el.dataset.suffix = "+";
       });
     } catch (err) {
-      // Backend fora do ar (ou site aberto direto do arquivo) — os
-      // números ilustrativos definidos no HTML seguem valendo.
-      console.info("Estatísticas reais indisponíveis, usando valores ilustrativos.");
+      // Backend offline (or site opened directly from a file) — the
+      // illustrative numbers defined in the HTML remain in place.
+      console.info("Real stats unavailable, using illustrative values.");
     }
   };
 
@@ -144,7 +144,7 @@
       const start = performance.now();
 
       if (prefersReducedMotion) {
-        el.textContent = (decimals > 0 ? target.toFixed(decimals) : Math.round(target).toLocaleString("pt-BR")) + suffix;
+        el.textContent = (decimals > 0 ? target.toFixed(decimals) : Math.round(target).toLocaleString("en-US")) + suffix;
         return;
       }
 
@@ -152,7 +152,7 @@
         const p = Math.min(1, (now - start) / duration);
         const eased = 1 - Math.pow(1 - p, 3);
         const value = target * eased;
-        el.textContent = (decimals > 0 ? value.toFixed(decimals) : Math.round(value).toLocaleString("pt-BR")) + suffix;
+        el.textContent = (decimals > 0 ? value.toFixed(decimals) : Math.round(value).toLocaleString("en-US")) + suffix;
         if (p < 1) requestAnimationFrame(tick);
       };
       requestAnimationFrame(tick);
@@ -268,7 +268,7 @@
   document.addEventListener("DOMContentLoaded", async () => {
     initNav();
     initReveal();
-    await fetchRealStats(); // troca os data-count pelos valores reais antes de animar
+    await fetchRealStats(); // swaps data-count for real values before animating
     initCounters();
     initXpBar();
     initFaq();

@@ -31,15 +31,29 @@ load_dotenv()
 # (CREATE TABLE IF NOT EXISTS — não apaga nada que já exista)
 criar_tabelas()
 
-CLIENT_ID = os.getenv("DISCORD_CLIENT_ID")
-CLIENT_SECRET = os.getenv("DISCORD_CLIENT_SECRET")
-REDIRECT_URI = os.getenv("DISCORD_REDIRECT_URI")
-SESSION_SECRET = os.getenv("SESSION_SECRET_KEY")
+def _env(key: str, default: str | None = None) -> str | None:
+    """Lê uma env var e remove espaços/quebras de linha acidentais
+    (ex: arquivos .env salvos com final de linha CRLF no Windows,
+    que geram um '\\r' invisível grudado no valor e quebram URLs)."""
+    valor = os.getenv(key, default)
+    return valor.strip() if valor is not None else None
+
+
+CLIENT_ID = _env("DISCORD_CLIENT_ID")
+CLIENT_SECRET = _env("DISCORD_CLIENT_SECRET")
+REDIRECT_URI = _env("DISCORD_REDIRECT_URI")
+SESSION_SECRET = _env("SESSION_SECRET_KEY")
 
 COOLDOWN_SEGUNDOS = int(os.getenv("COOLDOWN_SEGUNDOS", 24 * 60 * 60))   # 24h
 JANELA_STREAK_SEGUNDOS = int(os.getenv("JANELA_STREAK_SEGUNDOS", 48 * 60 * 60))  # 48h
 PIXELS_MIN = int(os.getenv("PIXELS_MIN", 20))
 PIXELS_MAX = int(os.getenv("PIXELS_MAX", 60))
+
+# Permissões pedidas ao servidor quando alguém clica em "Add to Discord".
+# Padrão: ver canais, enviar mensagens, embeds, anexos, histórico, reações,
+# emojis externos e gerenciar cargos (necessário para os cargos automáticos
+# de nível). Ajuste em .env (BOT_PERMISSIONS) se seu bot precisar de mais/menos.
+BOT_PERMISSIONS = os.getenv("BOT_PERMISSIONS", "268815424").strip()
 
 DISCORD_API = "https://discord.com/api"
 
@@ -58,18 +72,28 @@ def avatar_url(user_id: str, avatar_hash: str | None) -> str | None:
     return f"https://cdn.discordapp.com/avatars/{user_id}/{avatar_hash}.png"
 
 
+def invite_url() -> str:
+    """Link oficial de convite do bot (botão 'Add to Discord' do site)."""
+    return (
+        f"{DISCORD_API}/oauth2/authorize"
+        f"?client_id={CLIENT_ID}"
+        f"&permissions={BOT_PERMISSIONS}"
+        f"&scope=bot%20applications.commands"
+    )
+
+
 # ---------------------------------------------------------------------------
 # Páginas
 # ---------------------------------------------------------------------------
 
 @app.get("/")
 async def home(request: Request):
-    return templates.TemplateResponse(request, "index.html")
+    return templates.TemplateResponse(request, "index.html", {"invite_url": invite_url()})
 
 
 @app.get("/daily")
 async def daily_page(request: Request):
-    return templates.TemplateResponse(request, "daily.html")
+    return templates.TemplateResponse(request, "daily.html", {"invite_url": invite_url()})
 
 
 # ---------------------------------------------------------------------------
