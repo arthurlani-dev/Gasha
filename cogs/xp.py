@@ -7,7 +7,8 @@ from database.database import (
     criar_usuario,
     pegar_perfil,
     adicionar_xp,
-    subir_level
+    subir_level,
+    incrementar_estatistica,
 )
 
 
@@ -50,6 +51,11 @@ class XP(commands.Cog):
             user_id,
             xp_ganho
         )
+
+        # Conta como interação para a seção "Em números" do site
+        # (contador antigo só somava comandos de prefixo, então ficava
+        # zerado — mensagens com XP são a interação real e mais comum).
+        incrementar_estatistica("comandos_executados")
 
 
         perfil = pegar_perfil(user_id)

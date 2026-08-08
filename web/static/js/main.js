@@ -92,12 +92,61 @@
   };
 
   /* ------------------------------------------------------------------ *
-   * Estatísticas reais — busca /api/stats (site/app.py) e substitui os
-   * valores ilustrativos do HTML antes de animar. Se a API não responder
-   * (ex: site aberto sem o backend rodando), mantém os placeholders do
-   * próprio HTML como fallback, sem quebrar a seção.
+   * Real stats — fetches /api/stats (web/app.py) and replaces the
+   * illustrative HTML values with live numbers from the bot's database.
+   * Polls periodically so the numbers stay current while the page is
+   * open. If the API doesn't respond (e.g. backend offline, or the site
+   * opened straight from a file), the illustrative placeholders from the
+   * HTML stay in place instead of breaking the section.
    * ------------------------------------------------------------------ */
-  const fetchRealStats = async () => {
+  const STATS_POLL_MS = 30000;
+
+  const applyStatValues = (data, { animate: shouldAnimate }) => {
+    const nums = document.querySelectorAll("[data-stat]");
+    if (!nums.length) return;
+
+    const valores = {
+      servidores: data.servidores,
+      usuarios: data.usuarios,
+      comandos: data.comandos_executados,
+      pixels: data.pixels_distribuidos,
+    };
+
+    nums.forEach((el) => {
+      const valor = valores[el.dataset.stat];
+      if (typeof valor !== "number") return;
+
+      // Real numbers come in as whole integers, no fake decimals/suffix
+      el.dataset.count = valor;
+      el.removeAttribute("data-decimals");
+      el.dataset.suffix = "+";
+
+      if (shouldAnimate) return; // entrance animation (initCounters) handles this pass
+
+      // Background refresh: only re-render if the value actually moved,
+      // with a short tween instead of the long entrance animation.
+      const previous = parseFloat(el.dataset.current || el.dataset.count);
+      if (previous === valor) return;
+      tweenStatNumber(el, previous, valor, 700);
+    });
+  };
+
+  const tweenStatNumber = (el, from, to, duration) => {
+    const suffix = el.dataset.suffix || "";
+    const start = performance.now();
+    const step = (now) => {
+      const p = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - p, 3);
+      const value = from + (to - from) * eased;
+      el.textContent = Math.round(value).toLocaleString("en-US") + suffix;
+      el.dataset.current = value;
+      if (p < 1) requestAnimationFrame(step);
+      else el.dataset.current = to;
+    };
+    requestAnimationFrame(step);
+  };
+
+  const fetchRealStats = async ({ animate = false } = {}) => {
     const nums = document.querySelectorAll("[data-stat]");
     if (!nums.length) return;
 
@@ -105,27 +154,18 @@
       const res = await fetch("/api/stats", { credentials: "include" });
       if (!res.ok) throw new Error("stats unavailable");
       const data = await res.json();
-
-      const valores = {
-        servidores: data.servidores,
-        usuarios: data.usuarios,
-        comandos: data.comandos_executados,
-        pixels: data.pixels_distribuidos,
-      };
-
-      nums.forEach((el) => {
-        const valor = valores[el.dataset.stat];
-        if (typeof valor !== "number") return;
-        // Números reais entram inteiros, sem casas decimais fictícias
-        el.dataset.count = valor;
-        el.removeAttribute("data-decimals");
-        el.dataset.suffix = "+";
-      });
+      applyStatValues(data, { animate });
     } catch (err) {
       // Backend offline (or site opened directly from a file) — the
       // illustrative numbers defined in the HTML remain in place.
       console.info("Real stats unavailable, using illustrative values.");
     }
+  };
+
+  const startStatsPolling = () => {
+    const nums = document.querySelectorAll("[data-stat]");
+    if (!nums.length) return;
+    setInterval(() => fetchRealStats({ animate: false }), STATS_POLL_MS);
   };
 
   /* ------------------------------------------------------------------ *
@@ -145,6 +185,7 @@
 
       if (prefersReducedMotion) {
         el.textContent = (decimals > 0 ? target.toFixed(decimals) : Math.round(target).toLocaleString("en-US")) + suffix;
+        el.dataset.current = target;
         return;
       }
 
@@ -153,7 +194,9 @@
         const eased = 1 - Math.pow(1 - p, 3);
         const value = target * eased;
         el.textContent = (decimals > 0 ? value.toFixed(decimals) : Math.round(value).toLocaleString("en-US")) + suffix;
+        el.dataset.current = value;
         if (p < 1) requestAnimationFrame(tick);
+        else el.dataset.current = target;
       };
       requestAnimationFrame(tick);
     };
@@ -268,11 +311,12 @@
   document.addEventListener("DOMContentLoaded", async () => {
     initNav();
     initReveal();
-    await fetchRealStats(); // swaps data-count for real values before animating
+    await fetchRealStats({ animate: true }); // swaps data-count for real values before animating
     initCounters();
     initXpBar();
     initFaq();
     initBursts();
     initYear();
+    startStatsPolling(); // keeps the numbers live while the page stays open
   });
 })();

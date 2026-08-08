@@ -53,7 +53,15 @@ async def on_guild_remove(guild):
 
 @bot.event
 async def on_command_completion(ctx):
-    # Toda vez que um comando roda com sucesso, soma no contador global do site
+    # Toda vez que um comando de prefixo (!perfil, etc.) roda com sucesso,
+    # soma no contador global do site
+    incrementar_estatistica("comandos_executados")
+
+
+@bot.event
+async def on_app_command_completion(interaction, command):
+    # Mesmo contador, mas para slash commands (/daily, /top, etc.)
+    # quando você adicionar app_commands aos cogs
     incrementar_estatistica("comandos_executados")
 
 

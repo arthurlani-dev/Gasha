@@ -3,6 +3,7 @@ import sys
 import time
 import random
 import secrets
+from urllib.parse import urlencode
 
 import httpx
 from fastapi import FastAPI, Request
@@ -33,8 +34,9 @@ criar_tabelas()
 
 def _env(key: str, default: str | None = None) -> str | None:
     """Lê uma env var e remove espaços/quebras de linha acidentais
-    (ex: arquivos .env salvos com final de linha CRLF no Windows,
-    que geram um '\\r' invisível grudado no valor e quebram URLs)."""
+    (ex: valor colado com espaço extra no painel do Railway, ou um
+    arquivo .env salvo com final de linha CRLF no Windows — ambos
+    geram um caractere invisível grudado no valor e quebram a URL)."""
     valor = os.getenv(key, default)
     return valor.strip() if valor is not None else None
 
@@ -43,6 +45,28 @@ CLIENT_ID = _env("DISCORD_CLIENT_ID")
 CLIENT_SECRET = _env("DISCORD_CLIENT_SECRET")
 REDIRECT_URI = _env("DISCORD_REDIRECT_URI")
 SESSION_SECRET = _env("SESSION_SECRET_KEY")
+
+# Falha alto e claro no boot se essenciais para o login com Discord
+# estiverem faltando, em vez de deixar o erro estourar só quando
+# alguém clicar em "Sign in with Discord".
+_faltando = [
+    nome for nome, valor in (
+        ("DISCORD_CLIENT_ID", CLIENT_ID),
+        ("DISCORD_CLIENT_SECRET", CLIENT_SECRET),
+        ("DISCORD_REDIRECT_URI", REDIRECT_URI),
+        ("SESSION_SECRET_KEY", SESSION_SECRET),
+    ) if not valor
+]
+if _faltando:
+    print(
+        f"[gasha] AVISO: variáveis de ambiente ausentes/vazias: {', '.join(_faltando)}. "
+        "O login com Discord (/auth/discord/login) vai falhar até isso ser configurado."
+    )
+if REDIRECT_URI and not REDIRECT_URI.startswith(("http://", "https://")):
+    print(
+        f"[gasha] AVISO: DISCORD_REDIRECT_URI não parece uma URL válida: {REDIRECT_URI!r}. "
+        "Confira se não há espaços, aspas ou quebras de linha coladas junto no valor."
+    )
 
 COOLDOWN_SEGUNDOS = int(os.getenv("COOLDOWN_SEGUNDOS", 24 * 60 * 60))   # 24h
 JANELA_STREAK_SEGUNDOS = int(os.getenv("JANELA_STREAK_SEGUNDOS", 48 * 60 * 60))  # 48h
@@ -104,14 +128,14 @@ async def daily_page(request: Request):
 async def login():
     state = secrets.token_urlsafe(16)
 
-    url = (
-        f"{DISCORD_API}/oauth2/authorize"
-        f"?client_id={CLIENT_ID}"
-        f"&redirect_uri={REDIRECT_URI}"
-        f"&response_type=code"
-        f"&scope=identify"
-        f"&state={state}"
-    )
+    params = {
+        "client_id": CLIENT_ID,
+        "redirect_uri": REDIRECT_URI,
+        "response_type": "code",
+        "scope": "identify",
+        "state": state,
+    }
+    url = f"{DISCORD_API}/oauth2/authorize?{urlencode(params)}"
 
     return RedirectResponse(url)
 
