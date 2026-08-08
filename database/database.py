@@ -36,8 +36,14 @@ def criar_tabelas():
             pixels INTEGER DEFAULT 0,
             conquistas TEXT DEFAULT '',
             ultimo_clique_site BIGINT DEFAULT 0,
-            streak_atual INTEGER DEFAULT 0
+            streak_atual INTEGER DEFAULT 0,
+            ultimo_work BIGINT DEFAULT 0
         )
+    """)
+
+    # Garante a coluna em bancos criados antes do comando !work existir
+    cursor.execute("""
+        ALTER TABLE usuarios ADD COLUMN IF NOT EXISTS ultimo_work BIGINT DEFAULT 0
     """)
 
     cursor.execute("""
@@ -180,6 +186,72 @@ def registrar_claim_diario(user_id, agora, pixels_ganhos, novo_streak):
     conn.commit()
     cursor.close()
     conn.close()
+
+
+# ---------------------------------------------------------------------------
+# Comando !work
+# ---------------------------------------------------------------------------
+
+def pegar_estado_work(user_id):
+    """Retorna o timestamp do último !work ou None se o usuário não existir."""
+    conn = conectar()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT ultimo_work FROM usuarios WHERE id = %s",
+        (user_id,)
+    )
+
+    resultado = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return resultado
+
+
+def registrar_work(user_id, agora, pixels_ganhos):
+    """Soma os pixels ganhos no !work e grava o novo horário de cooldown."""
+    conn = conectar()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        UPDATE usuarios
+        SET pixels = pixels + %s,
+            ultimo_work = %s
+        WHERE id = %s
+        """,
+        (pixels_ganhos, agora, user_id)
+    )
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+
+# ---------------------------------------------------------------------------
+# Leaderstats
+# ---------------------------------------------------------------------------
+
+def obter_leaderboard_pixels(limite=10):
+    """Retorna os usuários com mais pixels: lista de (id, pixels)."""
+    conn = conectar()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        SELECT id, pixels
+        FROM usuarios
+        WHERE pixels > 0
+        ORDER BY pixels DESC
+        LIMIT %s
+        """,
+        (limite,)
+    )
+
+    resultado = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return resultado
 
 
 # ---------------------------------------------------------------------------

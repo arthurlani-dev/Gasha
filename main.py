@@ -29,8 +29,9 @@ criar_tabelas()
 
 @bot.event
 async def setup_hook():
-    await bot.load_extension("cogs.perfil")
+    await bot.load_extension("cogs.status")
     await bot.load_extension("cogs.xp")
+    await bot.load_extension("cogs.economia")
 
 
 @bot.event
