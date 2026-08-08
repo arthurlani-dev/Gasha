@@ -1,0 +1,9 @@
+.env
+.git
+.gitignore
+__pycache__/
+*.pyc
+database/bot.db
+database/bot.db-wal
+database/bot.db-shm
+README.md
