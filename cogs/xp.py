@@ -75,14 +75,14 @@ class XP(commands.Cog):
 
             embed = discord.Embed(
                 description=(
-                    f"🎉 Parabéns, {message.author.mention}! Você subiu para o "
-                    f"**nível {level + 1}** neste servidor!"
+                    f"🎉 Congrats, {message.author.mention}! You've reached "
+                    f"**level {level + 1}** on this server!"
                 ),
                 color=discord.Color.gold()
             )
 
             embed.set_footer(
-                text="📍 Níveis são locais de cada servidor — mas seus 💎 pixels valem em todo o Gasha!"
+                text="📍 Levels are local to each server — but your 💎 pixels are valid across all of Gasha!"
             )
 
             await message.channel.send(embed=embed)

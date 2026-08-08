@@ -85,6 +85,16 @@ def criar_tabelas():
         )
     """)
 
+    # !friend — amizades entre usuários (dupla sempre guardada ordenada)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS amizades (
+            usuario_a BIGINT NOT NULL,
+            usuario_b BIGINT NOT NULL,
+            criado_em BIGINT NOT NULL,
+            PRIMARY KEY (usuario_a, usuario_b)
+        )
+    """)
+
     conn.commit()
     cursor.close()
     conn.close()
@@ -382,6 +392,48 @@ def marcar_secret_publicado(secret_id):
     cursor.execute(
         "UPDATE secrets SET publicado = TRUE WHERE id = %s",
         (secret_id,)
+    )
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+
+# ---------------------------------------------------------------------------
+# !friend — amizades
+# ---------------------------------------------------------------------------
+
+def sao_amigos(user_id_1, user_id_2):
+    """Verifica se dois usuários já são amigos (a dupla é sempre guardada ordenada)."""
+    usuario_a, usuario_b = sorted((user_id_1, user_id_2))
+
+    conn = conectar()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT 1 FROM amizades WHERE usuario_a = %s AND usuario_b = %s",
+        (usuario_a, usuario_b)
+    )
+
+    resultado = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return resultado is not None
+
+
+def adicionar_amizade(user_id_1, user_id_2, criado_em):
+    usuario_a, usuario_b = sorted((user_id_1, user_id_2))
+
+    conn = conectar()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        INSERT INTO amizades (usuario_a, usuario_b, criado_em)
+        VALUES (%s, %s, %s)
+        ON CONFLICT (usuario_a, usuario_b) DO NOTHING
+        """,
+        (usuario_a, usuario_b, criado_em)
     )
 
     conn.commit()

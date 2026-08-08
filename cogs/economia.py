@@ -25,12 +25,12 @@ WORK_PIXELS_MAX = 50
 
 # Pequenas "falas" aleatórias pro !work não ficar sempre igual
 TAREFAS_WORK = [
-    "organizou os arquivos do servidor",
-    "ajudou um novato a configurar o Discord",
-    "moderou o chat com maestria",
-    "testou um novo comando do bot",
-    "desenhou uma pixel art pra comunidade",
-    "respondeu dúvidas no suporte",
+    "organized the server's files",
+    "helped a newbie set up Discord",
+    "moderated the chat like a pro",
+    "tested a new bot command",
+    "drew some pixel art for the community",
+    "answered questions in support",
 ]
 
 
@@ -80,8 +80,8 @@ class Economia(commands.Cog):
                 segundos = restante % 60
 
                 await ctx.send(
-                    f"⏳ {usuario.mention}, você já trabalhou recentemente! "
-                    f"Tente novamente em **{minutos}m {segundos}s**."
+                    f"⏳ {usuario.mention}, you've already worked recently! "
+                    f"Try again in **{minutos}m {segundos}s**."
                 )
                 return
 
@@ -92,7 +92,7 @@ class Economia(commands.Cog):
 
         embed = discord.Embed(
             description=(
-                f"💼 {usuario.mention} {tarefa} e ganhou "
+                f"💼 {usuario.mention} {tarefa} and earned "
                 f"**{pixels_ganhos} 💎 pixels**!"
             ),
             color=discord.Color.green()
@@ -106,7 +106,7 @@ class Economia(commands.Cog):
         top = obter_leaderboard_pixels(10)
 
         if not top:
-            await ctx.send("❌ Ainda não há dados suficientes para o ranking.")
+            await ctx.send("❌ Not enough data yet for the leaderboard.")
             return
 
         medalhas = ["🥇", "🥈", "🥉"]
@@ -117,7 +117,7 @@ class Economia(commands.Cog):
                 usuario = self.bot.get_user(user_id) or await self.bot.fetch_user(user_id)
                 nome = usuario.display_name if hasattr(usuario, "display_name") else usuario.name
             except discord.NotFound:
-                nome = f"Usuário {user_id}"
+                nome = f"User {user_id}"
 
             posicao = medalhas[i] if i < 3 else f"`#{i + 1}`"
             linhas.append(f"{posicao} **{nome}** — 💎 {pixels}")
@@ -129,7 +129,7 @@ class Economia(commands.Cog):
         )
 
         embed.set_footer(
-            text=f"{self.bot.user.name} • Ranking de Pixels",
+            text=f"{self.bot.user.name} • Pixel Leaderboard",
             icon_url=self.bot.user.avatar.url
             if self.bot.user.avatar else None
         )

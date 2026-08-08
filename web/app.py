@@ -77,14 +77,6 @@ JANELA_STREAK_SEGUNDOS = int(os.getenv("JANELA_STREAK_SEGUNDOS", 48 * 60 * 60)) 
 PIXELS_MIN = int(os.getenv("PIXELS_MIN", 20))
 PIXELS_MAX = int(os.getenv("PIXELS_MAX", 60))
 
-# Permissões pedidas ao servidor quando alguém clica em "Add to Discord".
-# Padrão: ver canais, enviar mensagens, embeds, anexos, histórico, reações,
-# emojis externos, gerenciar cargos (cargos automáticos de nível) e
-# gerenciar mensagens (necessário pro !secret/!answer/!confess apagarem
-# a mensagem original e manterem o anonimato). Ajuste em .env
-# (BOT_PERMISSIONS) se seu bot precisar de mais/menos.
-BOT_PERMISSIONS = os.getenv("BOT_PERMISSIONS", "268823616").strip()
-
 DISCORD_API = "https://discord.com/api"
 
 
@@ -105,10 +97,11 @@ def avatar_url(user_id: str, avatar_hash: str | None) -> str | None:
 def invite_url() -> str:
     """Link oficial de convite do bot (botão 'Add to Discord' do site)."""
     return (
-        f"{DISCORD_API}/oauth2/authorize"
-        f"?client_id={CLIENT_ID}"
-        f"&permissions={BOT_PERMISSIONS}"
-        f"&scope=bot%20applications.commands"
+        "https://discord.com/oauth2/authorize"
+        "?client_id=1534767598317731893"
+        "&permissions=139855211584"
+        "&integration_type=0"
+        "&scope=bot+applications.commands"
     )
 
 

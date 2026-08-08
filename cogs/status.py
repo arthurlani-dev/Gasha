@@ -20,7 +20,7 @@ class Status(commands.Cog):
         dados = pegar_perfil(usuario.id)
 
         if dados is None:
-            await ctx.send("❌ Não foi possível encontrar seu perfil.")
+            await ctx.send("❌ Couldn't find your status.")
             return
 
         _, level, xp, pixels, conquistas = dados
@@ -30,7 +30,7 @@ class Status(commands.Cog):
         if conquistas:
             conquistas_formatadas = conquistas.replace(",", "\n")
         else:
-            conquistas_formatadas = "🔒 Nenhuma conquista desbloqueada"
+            conquistas_formatadas = "🔒 No achievements unlocked yet"
 
 
         # Barra de XP
@@ -48,8 +48,8 @@ class Status(commands.Cog):
 
         # Criando embed
         embed = discord.Embed(
-            title=f"✨ Status de {usuario.display_name}",
-            description=f"Confira as informações de {usuario.mention}",
+            title=f"✨ {usuario.display_name}'s Status",
+            description=f"Here's {usuario.mention}'s info",
             color=discord.Color.blurple()
         )
 
@@ -83,7 +83,7 @@ class Status(commands.Cog):
 
         # Conquistas
         embed.add_field(
-            name="🏆 Conquistas",
+            name="🏆 Achievements",
             value=conquistas_formatadas,
             inline=False
         )
@@ -96,7 +96,7 @@ class Status(commands.Cog):
 
 
         embed.set_footer(
-            text=f"{self.bot.user.name} • Sistema de Status",
+            text=f"{self.bot.user.name} • Status System",
             icon_url=self.bot.user.avatar.url
             if self.bot.user.avatar else None
         )

@@ -10,41 +10,61 @@ class Ajuda(commands.Cog):
     @commands.command(name="commands")
     async def commands_list(self, ctx):
         embed = discord.Embed(
-            title="📜 Comandos do Gasha",
-            description="Aqui está tudo que você pode fazer por aqui:",
+            title="📜 Gasha Commands",
+            description="Here's everything you can do:",
             color=discord.Color.blurple(),
         )
 
         embed.add_field(
-            name="⭐ Perfil",
-            value="`!status` — mostra seu level, XP e pixels neste servidor",
+            name="⭐ Profile",
+            value="`!status` — shows your level, XP and pixels on this server",
             inline=False,
         )
 
         embed.add_field(
-            name="💎 Economia",
+            name="💎 Economy",
             value=(
-                "`!daily` — resgate seus pixels diários no site\n"
-                "`!work` — trabalhe e ganhe pixels (cooldown de 1h)\n"
-                "`!leaderstats` — ranking dos usuários com mais pixels"
+                "`!daily` — claim your daily pixels on the website\n"
+                "`!work` — work and earn pixels (1h cooldown)\n"
+                "`!leaderstats` — leaderboard of users with the most pixels"
             ),
             inline=False,
         )
 
         embed.add_field(
-            name="🤫 Social & Anônimo",
+            name="🤝 Friends",
             value=(
-                "`!secret <pergunta>` — faça uma pergunta anônima "
-                "(respostas reveladas em 1h por padrão, ou `!secret <minutos> <pergunta>`)\n"
-                "`!answer <id> <resposta>` — responda um secret anonimamente\n"
-                "`!confess <texto>` — confesse algo anonimamente\n"
-                "`!question` — pergunta aleatória pra quebrar o gelo"
+                "`!friend @user` — send a friend request\n"
+                "`!ship @user` — ship yourself with someone\n"
+                "`!ship @user1 @user2` — ship two people together"
+            ),
+            inline=False,
+        )
+
+        embed.add_field(
+            name="🎉 Mini-games",
+            value=(
+                "`!party` — see all available mini-games\n"
+                "`!wouldyourather` — random Would You Rather question\n"
+                "`!twotruths` — play Two Truths and a Lie"
+            ),
+            inline=False,
+        )
+
+        embed.add_field(
+            name="🤫 Anonymous",
+            value=(
+                "`!secret <question>` — ask an anonymous question "
+                "(answers revealed in 1h by default, or `!secret <minutes> <question>`)\n"
+                "`!answer <id> <answer>` — answer a secret anonymously\n"
+                "`!confess <text>` — confess something anonymously\n"
+                "`!question` — random icebreaker question"
             ),
             inline=False,
         )
 
         embed.set_footer(
-            text=f"{self.bot.user.name} • Levels são locais de cada servidor, mas pixels valem em todo o Gasha!",
+            text=f"{self.bot.user.name} • Levels are local to each server, but pixels are valid across all of Gasha!",
             icon_url=self.bot.user.avatar.url if self.bot.user.avatar else None,
         )
 

@@ -34,6 +34,8 @@ async def setup_hook():
     await bot.load_extension("cogs.xp")
     await bot.load_extension("cogs.economia")
     await bot.load_extension("cogs.anonimo")
+    await bot.load_extension("cogs.social")
+    await bot.load_extension("cogs.minigames")
     await bot.load_extension("cogs.ajuda")
 
 

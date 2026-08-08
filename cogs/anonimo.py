@@ -65,8 +65,8 @@ class Anonimo(commands.Cog):
     async def secret(self, ctx, *, conteudo: str = None):
         if not conteudo:
             await ctx.send(
-                "❌ Use assim: `!secret <sua pergunta>`\n"
-                "Ou defina um tempo customizado: `!secret <minutos> <pergunta>`"
+                "❌ Usage: `!secret <your question>`\n"
+                "Or set a custom time: `!secret <minutes> <question>`"
             )
             return
 
@@ -85,7 +85,7 @@ class Anonimo(commands.Cog):
             pergunta = partes[1]
 
         if not pergunta.strip():
-            await ctx.send("❌ Sua pergunta não pode ficar vazia.", delete_after=8)
+            await ctx.send("❌ Your question can't be empty.", delete_after=8)
             return
 
         agora = int(time.time())
@@ -110,16 +110,16 @@ class Anonimo(commands.Cog):
         )
 
         embed.add_field(
-            name="Como responder",
+            name="How to answer",
             value=(
-                f"`!answer {secret_id} <sua resposta>`\n"
-                "(sua mensagem é apagada automaticamente — ninguém vai saber quem respondeu)"
+                f"`!answer {secret_id} <your answer>`\n"
+                "(your message gets deleted automatically — no one will know who answered)"
             ),
             inline=False,
         )
 
         embed.set_footer(
-            text=f"As respostas serão reveladas em {minutos} minuto(s)"
+            text=f"Answers will be revealed in {minutos} minute(s)"
         )
 
         await ctx.send(embed=embed)
@@ -136,13 +136,13 @@ class Anonimo(commands.Cog):
             pass
 
         if secret_id is None or not resposta or not resposta.strip():
-            await self._avisar(ctx, "❌ Use assim: `!answer <id> <sua resposta>`")
+            await self._avisar(ctx, "❌ Usage: `!answer <id> <your answer>`")
             return
 
         secret = pegar_secret(secret_id)
 
         if secret is None:
-            await self._avisar(ctx, f"❌ Secret #{secret_id} não encontrado.")
+            await self._avisar(ctx, f"❌ Secret #{secret_id} not found.")
             return
 
         _, _, _, _, publicado = secret
@@ -150,7 +150,7 @@ class Anonimo(commands.Cog):
         if publicado:
             await self._avisar(
                 ctx,
-                f"❌ Secret #{secret_id} já foi revelado, não dá mais pra responder."
+                f"❌ Secret #{secret_id} has already been revealed, you can't answer it anymore."
             )
             return
 
@@ -159,9 +159,9 @@ class Anonimo(commands.Cog):
         )
 
         if registrado:
-            await self._avisar(ctx, f"✅ Resposta anônima registrada no Secret #{secret_id}!")
+            await self._avisar(ctx, f"✅ Anonymous answer recorded for Secret #{secret_id}!")
         else:
-            await self._avisar(ctx, f"⚠️ Você já respondeu o Secret #{secret_id}.")
+            await self._avisar(ctx, f"⚠️ You've already answered Secret #{secret_id}.")
 
 
     async def _avisar(self, ctx, texto):
@@ -197,15 +197,15 @@ class Anonimo(commands.Cog):
                     f"**{i + 1}.** {resposta}" for i, resposta in enumerate(respostas)
                 )
             else:
-                lista_respostas = "😶 Ninguém respondeu esse secret."
+                lista_respostas = "😶 No one answered this secret."
 
             embed = discord.Embed(
-                title=f"📣 Secret #{secret_id} revelado!",
-                description=f"**Pergunta:** {pergunta}\n\n{lista_respostas}",
+                title=f"📣 Secret #{secret_id} revealed!",
+                description=f"**Question:** {pergunta}\n\n{lista_respostas}",
                 color=discord.Color.purple(),
             )
 
-            embed.set_footer(text="Todas as respostas continuam 100% anônimas")
+            embed.set_footer(text="All answers remain 100% anonymous")
 
             try:
                 await canal.send(embed=embed)
@@ -226,7 +226,7 @@ class Anonimo(commands.Cog):
     @commands.command(name="confess")
     async def confess(self, ctx, *, confissao: str = None):
         if not confissao or not confissao.strip():
-            await ctx.send("❌ Use assim: `!confess <sua confissão>`")
+            await ctx.send("❌ Usage: `!confess <your confession>`")
             return
 
         try:
@@ -241,7 +241,7 @@ class Anonimo(commands.Cog):
         )
 
         embed.set_footer(
-            text=f"{self.bot.user.name} • Confissões são 100% anônimas"
+            text=f"{self.bot.user.name} • Confessions are 100% anonymous"
         )
 
         await ctx.send(embed=embed)
@@ -260,7 +260,7 @@ class Anonimo(commands.Cog):
             color=discord.Color.teal(),
         )
 
-        embed.set_footer(text=f"{self.bot.user.name} • Vamos bater um papo!")
+        embed.set_footer(text=f"{self.bot.user.name} • Let's get chatting!")
 
         await ctx.send(embed=embed)
 
